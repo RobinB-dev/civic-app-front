@@ -3,6 +3,13 @@ import Navigation from "./src/navigation";
 import { AuthProvider } from "./src/provider/AuthProvider";
 import { ThemeProvider } from "react-native-rapi-ui";
 import { LogBox } from "react-native";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+
+// Initialize Apollo Client
+const client = new ApolloClient({
+  uri: "http://localhost:4000/",
+  cache: new InMemoryCache(),
+});
 
 export default function App() {
   const images = [
@@ -19,10 +26,12 @@ export default function App() {
   }, []);
 
   return (
-    <ThemeProvider theme="dark" images={images}>
-      <AuthProvider>
-        <Navigation />
-      </AuthProvider>
-    </ThemeProvider>
+    <ApolloProvider client={client}>
+      <ThemeProvider theme="dark" images={images}>
+        <AuthProvider>
+          <Navigation />
+        </AuthProvider>
+      </ThemeProvider>
+    </ApolloProvider>
   );
 }

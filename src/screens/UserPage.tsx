@@ -24,7 +24,7 @@ const findUser = (_userName: string) => {
 export default function ({
   navigation,
   route,
-}: NativeStackScreenProps<MainStackParamList, "SecondScreen">) {
+}: NativeStackScreenProps<MainStackParamList, "UserPage">) {
   const { isDarkmode, setTheme } = useTheme();
   const [userName, setUserName] = useState("roger");
   const [userObj, setUserObj] = useState({});
@@ -116,6 +116,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   description: {
-    fontSize: 20,
+    fontSize: 30,
   },
 });

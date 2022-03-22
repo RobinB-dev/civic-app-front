@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, FlatList, StyleSheet, Pressable, Image } from "react-native";
 import { MainStackParamList } from "../types/navigation";
 import { getAuth, signOut } from "firebase/auth";
@@ -14,32 +14,25 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import DATA from "../provider/data.json";
 import USERS from "../provider/users.json";
+import { CardPost } from "../components/CardPost";
+import Loading from "../screens/utils/Loading";
+
+import { gql, useQuery, useMutation } from "@apollo/client";
+import { testObj } from "../decl/functions.decl";
+
+const POSTS_QUERY = gql`
+  query appInfos {
+    Posts {
+      content
+      id
+      createdAt
+    }
+  }
+`;
 
 const findUser = (_userId: number) => {
   return USERS.find((o: { userId: number }) => o.userId === _userId);
 };
-
-const Item = ({ title, body, user, navigation }: any) => (
-  <View style={styles.item}>
-    <Pressable
-      onPress={() => {
-        {
-          navigation.navigate("SecondScreen", { userName: [user.username] });
-        }
-      }}
-    >
-      <Image
-        style={styles.userImg}
-        source={{
-          uri: user.picture,
-        }}
-      ></Image>
-      <Text style={styles.body}>{user.username}</Text>
-    </Pressable>
-    <Text style={styles.title}>{title}</Text>
-    <Text style={styles.body}>{body}</Text>
-  </View>
-);
 
 export default function ({
   navigation,
@@ -47,16 +40,36 @@ export default function ({
   const [posts, setPosts] = useState(DATA);
   const { isDarkmode, setTheme } = useTheme();
 
+  const { data, loading, error } = useQuery(POSTS_QUERY);
+
+  // console.log("posts : ", data);
+  // console.log("isLoading : ", loading);
+  // console.log("error : ", error);
+
+  useEffect(() => {
+    if (!loading) {
+      if (data) {
+        // console.log("not loading : ", loading);
+        // console.log("posts : ", data);
+        setPosts(testObj(data, "Posts"));
+      }
+    } else {
+      // console.log("loading : ", loading);
+    }
+  }, [loading]);
+
   const renderItem = ({ item }: any) => (
-    <Item
+    <CardPost
       title={item.title}
-      body={item.body}
-      user={findUser(item.userId)}
-      navigation={navigation}
-    />
+      content={item.content}
+      // user={findUser(item.userId)}
+      // user={findUser(item.userId)}
+      // navigation={navigation}
+    ></CardPost>
   );
 
   const onPressFunction = () => {
+    // navigation.navigate("NewPost", { userName: "Robin" });
     console.log("Add post");
   };
   // const auth = getAuth();
@@ -79,6 +92,7 @@ export default function ({
           }
         }}
       />
+
       <View
         style={{
           flex: 1,
@@ -86,25 +100,14 @@ export default function ({
           justifyContent: "center",
         }}
       >
-        {/* <Section style={{ margin: 0, marginTop: 0, flex: 1 }}> */}
-        {/* <SectionContent> */}
-        <FlatList
-          data={posts}
-          renderItem={renderItem}
-          keyExtractor={(posts): any => posts.id}
-        />
-        {/* </SectionContent> */}
-        {/* </Section> */}
-        {/* <Button
-          text="Press"
-          color="#f194ff"
-          onPress={() => Alert.alert("Button with adjusted color pressed")}
-          style={{
-            position: "absolute",
-            bottom: 0,
-            right: 0,
-          }}
-        /> */}
+        {loading && <Loading />}
+        {!loading && (
+          <FlatList
+            data={posts}
+            renderItem={renderItem}
+            keyExtractor={(posts): any => posts.id}
+          />
+        )}
         <Pressable
           onPress={onPressFunction}
           style={[styles.AddButton, isDarkmode ? styles.dark : styles.white]}
@@ -128,7 +131,7 @@ const styles = StyleSheet.create({
     // marginTop: StatusBar.currentHeight || 0,
   },
   item: {
-    backgroundColor: "#f9c2ff12",
+    backgroundColor: "#fefefe",
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
@@ -141,9 +144,9 @@ const styles = StyleSheet.create({
     height: 50,
   },
   title: {
-    fontSize: 24,
+    fontSize: 0,
   },
-  body: {
+  content: {
     fontSize: 16,
   },
   AddButton: {

@@ -14,7 +14,6 @@ export default function ({
         style={{
           flex: 1,
           alignItems: "center",
-          justifyContent: "center",
         }}
       >
         <Section>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { MainStackParamList } from "../types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -18,6 +18,19 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import USERS from "../provider/users.json";
 import { testObj } from "../decl/functions.decl";
 
+import { gql, useQuery } from "@apollo/client";
+
+const POSTS_QUERY = gql`
+  query appInfos {
+    Users {
+      id
+      username
+      number
+      createdAt
+    }
+  }
+`;
+
 export type RootStackParamList = {
   HomeScreen: undefined;
   DetailsScreen: {
@@ -34,7 +47,19 @@ export default function ({
   const auth = useContext(AuthContext);
   const [userObj, setUserObj] = useState(USERS[0]);
 
-  console.log(userObj);
+  const { data, loading, error } = useQuery(POSTS_QUERY);
+  console.log("error : ", error);
+
+  useEffect(() => {
+    if (testObj(data, "Users")) {
+      console.log("not loading : ", loading);
+      console.log("users : ", testObj(data, "Users")[0]);
+      setUserObj(testObj(data, "Users")[0]);
+    } else {
+      console.log("loading : ", loading);
+    }
+  }, [loading]);
+  // console.log(userObj);
 
   return (
     <Layout>
@@ -44,7 +69,7 @@ export default function ({
           <Ionicons
             name={"settings"}
             size={20}
-            color={isDarkmode ? themeColor.white100 : themeColor.dark}
+            // color={isDarkmode ? themeColor.white100 : themeColor.dark}
           />
         }
         rightAction={() => {
@@ -62,13 +87,13 @@ export default function ({
           justifyContent: "center",
         }}
       >
-        <Section style={{ marginTop: 20 }}>
+        <Section style={{ marginTop: 23 }}>
           <SectionContent>
             <Text style={styles.username}>{testObj(userObj, "username")}</Text>
             <Image
               style={styles.picture}
               source={{
-                uri: testObj(userObj, "picture"),
+                uri: testObj(userObj, "profilPicture"),
               }}
             />
             <Text>{testObj(userObj, "description")}</Text>
@@ -104,6 +129,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   description: {
-    fontSize: 20,
+    fontSize: 34,
   },
 });

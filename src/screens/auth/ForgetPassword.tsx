@@ -69,8 +69,8 @@ export default function ({
           <View
             style={{
               flex: 3,
-              paddingHorizontal: 20,
-              paddingBottom: 20,
+              paddingHorizontal: 21,
+              paddingBottom: 22,
               backgroundColor: isDarkmode ? themeColor.dark : themeColor.white,
             }}
           >
@@ -101,7 +101,7 @@ export default function ({
                 forget();
               }}
               style={{
-                marginTop: 20,
+                marginTop: 0,
               }}
               disabled={loading}
             />

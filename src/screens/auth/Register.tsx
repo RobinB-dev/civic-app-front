@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { StatusBar } from "expo-status-bar";
 import {
   ScrollView,
   TouchableOpacity,
@@ -8,7 +7,6 @@ import {
   Image,
 } from "react-native";
 import { AuthStackParamList } from "../../types/navigation";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {
   Layout,
@@ -19,32 +17,52 @@ import {
   themeColor,
 } from "react-native-rapi-ui";
 import { AuthContext } from "../../provider/AuthProvider";
+import { gql, useMutation } from "@apollo/client";
+
+const GET_EMAIL = gql`
+  query Feed {
+    Feed {
+      email
+    }
+  }
+`;
+
+const ADD_EMAIL = gql`
+  mutation ($email: String!, $password: String!) {
+    register(email: $email, password: $password) {
+      id
+    }
+  }
+`;
 
 export default function ({
   navigation,
 }: NativeStackScreenProps<AuthStackParamList, "Register">) {
   const { isDarkmode, setTheme } = useTheme();
-  // const auth = getAuth();
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("test1@fm.com");
+  const [password, setPassword] = useState<string>("motdepasse");
   const auth = useContext(AuthContext);
+  const [addEmail, { data, loading, error }] = useMutation(ADD_EMAIL);
+  // const auth = getAuth();
+  // const [loading, setLoading] = useState<boolean>(false);
 
+  // const { data, loadingEmail, errorEmail } = useQuery(ADD_EMAIL);
+
+  console.log("here");
   async function register() {
-    setLoading(true);
+    // setLoading(true);
     console.log("createUserWithEmailAndPassword");
-    auth.setUser(true);
+    console.log("data2 : ", data);
+    console.log("error2 : ", error);
+    console.log("email : ", email, "password : ", password);
 
-    // await createUserWithEmailAndPassword(auth, email, password).catch(function (
-    //   error: any
-    // ) {
-    //   // Handle Errors here.
-    //   var errorCode = error.code;
-    //   var errorMessage = error.message;
-    //   // ...
-    //   setLoading(false);
-    //   alert(errorMessage);
-    // });
+    addEmail({
+      variables: {
+        email: email,
+        password: password,
+      },
+    });
+    auth.setUser(true);
   }
   return (
     <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>

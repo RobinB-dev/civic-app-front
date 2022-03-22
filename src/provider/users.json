@@ -2,25 +2,25 @@
   {
     "userId": 1,
     "username": "admin",
-    "picture": "https://placekitten.com/200/200",
+    "profilPicture": "https://placekitten.com/200/200",
     "description": "A cruel and heartless dictator who rules over the desert vulcano in the shadow montages with an iron fist. This despot is known for his many atrocities, including mass executions, torture, and other forms of human rights abuses."
   },
   {
     "userId": 2,
     "username": "user",
-    "picture": "https://placekitten.com/300/200",
+    "profilPicture": "https://placekitten.com/300/200",
     "description": "Passionate by the fashion, he is a lab rat , who is always testing out new trends. He has a strong need to be accepted and is a people pleaser."
   },
   {
     "userId": 3,
     "username": "Robin",
-    "picture": "https://placekitten.com/300/400",
+    "profilPicture": "https://placekitten.com/300/400",
     "description": "The developer of this app is very passionate about the web and has created a wonderful tool for developers. It is very user-friendly and makes developing web apps very easy."
   },
   {
     "userId": 4,
     "username": "Louis",
-    "picture": "https://placekitten.com/400/400",
+    "profilPicture": "https://placekitten.com/400/400",
     "description": "He has a very unique style, and he is very creative. He is known for his avant-garde designs, and he always pushes the envelope. He is a very talented designer, and he has a lot of potential."
   }
 ]
