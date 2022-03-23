@@ -4,6 +4,8 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 type ContextProps = {
   user: null | boolean;
   setUser?: any;
+  token: null | object;
+  setToken?: any;
 };
 
 const AuthContext = createContext<Partial<ContextProps>>({});
@@ -15,30 +17,31 @@ interface Props {
 const AuthProvider = (props: Props) => {
   // const auth = getAuth();
   // user null = loading
-  const [user, setUser] = useState<null | boolean>(null);
+  const [user, setUser] = useState<null | boolean>(false);
+  const [token, setToken] = useState<null | object>(null);
 
   useEffect(() => {
     checkLogin();
-  }, []);
+  }, [token]);
 
   function checkLogin() {
-    // onAuthStateChanged(auth, function (u) {
-    if (true) {
+    if (token) {
+      // console.log("token", token);
       setUser(true);
-      // getUserData();
     } else {
-      setUser(false);
-      // setUserData(null);
+      // console.log("no token", token);
+      // setUser(false);
+      setUser(true);
     }
   }
-  // );
-  // }
 
   return (
     <AuthContext.Provider
       value={{
         user,
         setUser,
+        token,
+        setToken,
       }}
     >
       {props.children}

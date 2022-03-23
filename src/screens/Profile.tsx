@@ -19,13 +19,16 @@ import USERS from "../provider/users.json";
 import { testObj } from "../decl/functions.decl";
 
 import { gql, useQuery } from "@apollo/client";
+import Loading from "./utils/Loading";
 
 const POSTS_QUERY = gql`
-  query appInfos {
-    Users {
+  query GetUser {
+    getUser {
       id
       username
+      profilPicture
       number
+      email
       createdAt
     }
   }
@@ -48,18 +51,17 @@ export default function ({
   const [userObj, setUserObj] = useState(USERS[0]);
 
   const { data, loading, error } = useQuery(POSTS_QUERY);
-  console.log("error : ", error);
 
   useEffect(() => {
-    if (testObj(data, "Users")) {
-      console.log("not loading : ", loading);
-      console.log("users : ", testObj(data, "Users")[0]);
-      setUserObj(testObj(data, "Users")[0]);
+    // console.log("error : ", error);
+    // console.log("not data : ", data);
+    if (testObj(data, "getUser")) {
+      // console.log("users : ", testObj(data, "getUser")[0]);
+      setUserObj(testObj(data, "getUser")[0]);
     } else {
-      console.log("loading : ", loading);
+      // console.log("loading : ", loading);
     }
   }, [loading]);
-  // console.log(userObj);
 
   return (
     <Layout>
@@ -87,33 +89,38 @@ export default function ({
           justifyContent: "center",
         }}
       >
-        <Section style={{ marginTop: 23 }}>
-          <SectionContent>
-            <Text style={styles.username}>{testObj(userObj, "username")}</Text>
-            <Image
-              style={styles.picture}
-              source={{
-                uri: testObj(userObj, "profilPicture"),
-              }}
-            />
-            <Text>{testObj(userObj, "description")}</Text>
-          </SectionContent>
-          <SectionContent>
-            <Button
-              status="danger"
-              text="Logout"
-              onPress={() => {
-                console.log("logout");
-                auth.setUser(false);
+        {loading && <Loading />}
+        {!loading && (
+          <Section style={{ marginTop: 23 }}>
+            <SectionContent>
+              <Text style={styles.username}>
+                {testObj(userObj, "username")}
+              </Text>
+              <Image
+                style={styles.picture}
+                source={{
+                  uri: testObj(userObj, "profilPicture"),
+                }}
+              />
+              <Text>{testObj(userObj, "description")}</Text>
+            </SectionContent>
+            <SectionContent>
+              <Button
+                status="danger"
+                text="Logout"
+                onPress={() => {
+                  console.log("logout");
+                  auth.setToken(null);
 
-                // signOut(auth);
-              }}
-              style={{
-                marginTop: 10,
-              }}
-            />
-          </SectionContent>
-        </Section>
+                  // signOut(auth);
+                }}
+                style={{
+                  marginTop: 10,
+                }}
+              />
+            </SectionContent>
+          </Section>
+        )}
       </View>
     </Layout>
   );

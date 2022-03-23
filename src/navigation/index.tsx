@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { getApps, initializeApp } from "firebase/app";
 import { AuthContext } from "../provider/AuthProvider";
 
@@ -11,10 +11,10 @@ import Loading from "../screens/utils/Loading";
 import { gql, useQuery, useMutation } from "@apollo/client";
 
 const USER_QUERY = gql`
-  query appInfos {
-    Posts {
-      content
+  query Query {
+    getPosts {
       id
+      content
       createdAt
     }
   }
@@ -24,6 +24,10 @@ export default () => {
   const { data, loading, error } = useQuery(USER_QUERY);
   const auth = useContext(AuthContext);
   const user = auth.user;
+
+  useEffect(() => {
+    // console.log("user", user);
+  }, [user]);
 
   return (
     // <NavigationContainer>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   ScrollView,
   TouchableOpacity,
@@ -18,6 +18,7 @@ import {
 } from "react-native-rapi-ui";
 import { AuthContext } from "../../provider/AuthProvider";
 import { gql, useMutation } from "@apollo/client";
+import { testObj } from "../../decl/functions.decl";
 
 const GET_EMAIL = gql`
   query Feed {
@@ -30,6 +31,7 @@ const GET_EMAIL = gql`
 const ADD_EMAIL = gql`
   mutation ($email: String!, $password: String!) {
     register(email: $email, password: $password) {
+      token
       id
     }
   }
@@ -40,21 +42,28 @@ export default function ({
 }: NativeStackScreenProps<AuthStackParamList, "Register">) {
   const { isDarkmode, setTheme } = useTheme();
   const [email, setEmail] = useState<string>("test1@fm.com");
-  const [password, setPassword] = useState<string>("motdepasse");
+  const [password, setPassword] = useState<string>("azerty123");
   const auth = useContext(AuthContext);
   const [addEmail, { data, loading, error }] = useMutation(ADD_EMAIL);
   // const auth = getAuth();
   // const [loading, setLoading] = useState<boolean>(false);
 
   // const { data, loadingEmail, errorEmail } = useQuery(ADD_EMAIL);
+  // useEffect(() => {
+  //   console.log(loading);
+  // }, [loading]);
+  useEffect(() => {
+    if (data) {
+      const user = testObj(data, "register");
+      const token = testObj(user, "token");
+      // console.log("oui", testObj(data, "register"));
+      auth.setToken(token);
+    }
+  }, [data]);
 
-  console.log("here");
   async function register() {
     // setLoading(true);
     console.log("createUserWithEmailAndPassword");
-    console.log("data2 : ", data);
-    console.log("error2 : ", error);
-    console.log("email : ", email, "password : ", password);
 
     addEmail({
       variables: {
@@ -62,7 +71,6 @@ export default function ({
         password: password,
       },
     });
-    auth.setUser(true);
   }
   return (
     <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>

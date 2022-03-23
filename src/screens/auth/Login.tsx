@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   ScrollView,
   TouchableOpacity,
@@ -18,6 +18,16 @@ import {
   themeColor,
 } from "react-native-rapi-ui";
 import { AuthContext } from "../../provider/AuthProvider";
+import { gql, useMutation } from "@apollo/client";
+import { testObj } from "../../decl/functions.decl";
+
+const LOGIN_EMAIL = gql`
+  mutation ($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+    }
+  }
+`;
 
 export default function ({
   navigation,
@@ -26,24 +36,30 @@ export default function ({
   // const auth = getAuth();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loginEmail, { data, loading, error }] = useMutation(LOGIN_EMAIL);
   const auth = useContext(AuthContext);
+  // const [loading, setLoading] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (data) {
+      const user = testObj(data, "login");
+      const token = testObj(user, "token");
+      // console.log(token);
+      auth.setToken(token);
+    }
+  }, [data, loading]);
+
+  // robin@robin.com
   async function login() {
-    setLoading(true);
+    // setLoading(true);
     console.log("signInWithEmailAndPassword");
-    auth.setUser(true);
 
-    // await signInWithEmailAndPassword(auth, email, password).catch(function (
-    //   error
-    // ) {
-    //   // Handle Errors here.
-    //   var errorCode = error.code;
-    //   var errorMessage = error.message;
-    //   // ...
-    //   setLoading(false);
-    //   alert(errorMessage);
-    // });
+    loginEmail({
+      variables: {
+        email: email,
+        password: password,
+      },
+    });
   }
   return (
     <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>

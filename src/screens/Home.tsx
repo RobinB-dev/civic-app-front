@@ -21,10 +21,10 @@ import { gql, useQuery, useMutation } from "@apollo/client";
 import { testObj } from "../decl/functions.decl";
 
 const POSTS_QUERY = gql`
-  query appInfos {
-    Posts {
-      content
+  query Posts {
+    getPosts {
       id
+      content
       createdAt
     }
   }
@@ -51,7 +51,7 @@ export default function ({
       if (data) {
         // console.log("not loading : ", loading);
         // console.log("posts : ", data);
-        setPosts(testObj(data, "Posts"));
+        setPosts(testObj(data, "getPosts"));
       }
     } else {
       // console.log("loading : ", loading);
