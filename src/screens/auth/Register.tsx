@@ -32,7 +32,7 @@ const ADD_EMAIL = gql`
   mutation ($email: String!, $password: String!) {
     register(email: $email, password: $password) {
       token
-      id
+      error
     }
   }
 `;
@@ -45,6 +45,7 @@ export default function ({
   const [password, setPassword] = useState<string>("azerty123");
   const auth = useContext(AuthContext);
   const [addEmail, { data, loading, error }] = useMutation(ADD_EMAIL);
+  const [authError, setAuthError] = useState<string | null>(null);
   // const auth = getAuth();
   // const [loading, setLoading] = useState<boolean>(false);
 
@@ -56,7 +57,10 @@ export default function ({
     if (data) {
       const user = testObj(data, "register");
       const token = testObj(user, "token");
-      // console.log("oui", testObj(data, "register"));
+      const error = testObj(user, "error");
+      if (error) {
+        setAuthError(error);
+      }
       auth.setToken(token);
     }
   }, [data]);
@@ -138,6 +142,7 @@ export default function ({
               secureTextEntry={true}
               onChangeText={(text) => setPassword(text)}
             />
+            {authError && <Text style={{ marginTop: 15 }}>{authError}</Text>}
             <Button
               text={loading ? "Loading" : "Create an account"}
               onPress={() => {
