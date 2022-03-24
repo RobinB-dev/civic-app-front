@@ -6,6 +6,7 @@ import UserPage from "../screens/UserPage";
 import NewPost from "../screens/NewPost";
 import NewPostComplete from "../screens/NewPostComplete";
 import NewPostPublished from "../screens/NewPostPublished";
+import SinglePost from "../screens/SinglePost";
 
 const MainStack = createNativeStackNavigator();
 const Main = () => {
@@ -20,6 +21,7 @@ const Main = () => {
       <MainStack.Screen name="NewPostPublished" component={NewPostPublished} />
       <MainStack.Screen name="NewPost" component={NewPost} />
       <MainStack.Screen name="NewPostComplete" component={NewPostComplete} />
+      <MainStack.Screen name="SinglePost" component={SinglePost} />
       <MainStack.Group screenOptions={{ presentation: "modal" }}>
         <MainStack.Screen name="MyModal" component={NewPost} />
       </MainStack.Group>

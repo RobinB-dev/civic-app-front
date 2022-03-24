@@ -6,6 +6,8 @@ type ContextProps = {
   setUser?: any;
   token: any;
   setToken?: any;
+  uid: string;
+  setUid?: any;
 };
 
 const AuthContext = createContext<Partial<ContextProps>>({});
@@ -41,6 +43,7 @@ const AuthProvider = (props: Props) => {
   // user null = loading
   const [user, setUser] = useState<null | boolean>(false);
   const [token, setToken] = useState<any>(null);
+  const [uid, setUid] = useState<string>();
 
   // test1@fm.com
   useEffect(() => {
@@ -48,6 +51,10 @@ const AuthProvider = (props: Props) => {
 
     checkLogin();
   }, [token]);
+
+  useEffect(() => {
+    console.log(uid, "uissss");
+  }, [uid]);
 
   useEffect(() => {
     checkToken();
@@ -89,6 +96,8 @@ const AuthProvider = (props: Props) => {
         setUser,
         token,
         setToken,
+        uid,
+        setUid,
       }}
     >
       {props.children}

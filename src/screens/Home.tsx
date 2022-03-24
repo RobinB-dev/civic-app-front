@@ -14,7 +14,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import DATA from "../provider/data.json";
 import USERS from "../provider/users.json";
-import { CardPost } from "../components/CardPostCopy";
+import { CardPost } from "../components/CardPost";
 import Loading from "../screens/utils/Loading";
 
 import { gql, useQuery, useMutation } from "@apollo/client";
@@ -30,6 +30,7 @@ const POSTS_QUERY = gql`
       title
       lat
       lng
+      image
     }
   }
 `;
@@ -54,7 +55,7 @@ export default function ({
       if (data) {
         console.log("rererer ", testObj(data, "getPosts"));
         // console.log("not loading : ", loading);
-        // console.log("posts : ", data);
+        console.log("posts : ", data);
         setPosts(testObj(data, "getPosts"));
       }
     } else {
@@ -66,7 +67,10 @@ export default function ({
     <CardPost
       title={item.title}
       content={item.content}
-      // user={findUser(item.userId)}
+      tag={item.tag}
+      navigation={navigation}
+      id={item.id}
+      image={item.image}
       // user={findUser(item.userId)}
       // navigation={navigation}
     ></CardPost>

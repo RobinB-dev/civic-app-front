@@ -29,10 +29,11 @@ const GET_EMAIL = gql`
 `;
 
 const ADD_EMAIL = gql`
-  mutation ($email: String!, $password: String!) {
-    register(email: $email, password: $password) {
+  mutation ($email: String!, $password: String!, $username: String!) {
+    register(email: $email, password: $password, username: $username) {
       token
       error
+      uid
     }
   }
 `;
@@ -43,6 +44,7 @@ export default function ({
   const { isDarkmode, setTheme } = useTheme();
   const [email, setEmail] = useState<string>("test1@fm.com");
   const [password, setPassword] = useState<string>("azerty123");
+  const [username, setUsername] = useState<string>("default");
   const auth = useContext(AuthContext);
   const [addEmail, { data, loading, error }] = useMutation(ADD_EMAIL);
   const [authError, setAuthError] = useState<string | null>(null);
@@ -55,6 +57,7 @@ export default function ({
   // }, [loading]);
   useEffect(() => {
     if (data) {
+      console.log(data);
       const user = testObj(data, "register");
       const token = testObj(user, "token");
       const error = testObj(user, "error");
@@ -73,6 +76,7 @@ export default function ({
       variables: {
         email: email,
         password: password,
+        username: username,
       },
     });
   }
@@ -106,10 +110,10 @@ export default function ({
               flex: 3,
               paddingHorizontal: 20,
               paddingBottom: 20,
-              backgroundColor: isDarkmode ? themeColor.dark : '#F7F7F7',
+              backgroundColor: isDarkmode ? themeColor.dark : "#F7F7F7",
             }}
           >
-             <Text
+            <Text
               fontWeight="bold"
               size="h3"
               style={{
@@ -122,14 +126,14 @@ export default function ({
             <TextInput
               containerStyle={{ marginTop: 15 }}
               placeholder="Nom d'utilisateur"
-              // value={email}
+              value={username}
               autoCapitalize="none"
               autoCompleteType="off"
               autoCorrect={false}
               keyboardType="default"
-              // onChangeText={(text) => setEmail(text)}
+              onChangeText={(text) => setUsername(text)}
             />
-           
+
             {/* <Text>Email</Text> */}
             <TextInput
               containerStyle={{ marginTop: 15 }}
@@ -184,7 +188,7 @@ export default function ({
                   fontWeight="bold"
                   style={{
                     marginLeft: 5,
-                    color : "#2C60C6"
+                    color: "#2C60C6",
                   }}
                 >
                   Se connecter
@@ -209,7 +213,7 @@ export default function ({
                   fontWeight="bold"
                   style={{
                     marginLeft: 5,
-                    color : "#2C60C6"
+                    color: "#2C60C6",
                   }}
                 >
                   {isDarkmode ? "☀️ light theme" : "🌑 dark theme"}

@@ -26,21 +26,7 @@ const LOGIN_EMAIL = gql`
     login(email: $email, password: $password) {
       token
       error
-    }
-  }
-`;
-
-const CREATE_POST = gql`
-  mutation {
-    createPost(
-      content: "content"
-      image: "ererer"
-      lat: "erer"
-      lng: "eee"
-      tag: "eeee"
-      title: "title"
-    ) {
-      tag
+      uid
     }
   }
 `;
@@ -58,15 +44,17 @@ export default function ({
   // const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(data, error);
+    // console.log(data, error);
     if (data) {
       const user = testObj(data, "login");
       const token = testObj(user, "token");
       const error = testObj(user, "error");
+      const uid = testObj(user, "uid");
       if (error) {
         setAuthError(error);
       }
       auth.setToken(token);
+      auth.setUid(uid);
     }
   }, [data, loading]);
 
@@ -179,7 +167,7 @@ export default function ({
                   fontWeight="bold"
                   style={{
                     marginLeft: 5,
-                    color : "#2C60C6"
+                    color: "#2C60C6",
                   }}
                 >
                   Register here
@@ -199,12 +187,13 @@ export default function ({
                   navigation.navigate("ForgetPassword");
                 }}
               >
-                <Text 
-                size="md" 
-                fontWeight="bold"
-                style={{
-                  color : "#2C60C6"
-                }}>
+                <Text
+                  size="md"
+                  fontWeight="bold"
+                  style={{
+                    color: "#2C60C6",
+                  }}
+                >
                   Mot de passe oublié ?
                 </Text>
               </TouchableOpacity>
