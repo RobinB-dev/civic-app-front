@@ -1,9 +1,9 @@
 export type MainStackParamList = {
-  MainTabs: undefined;
+  MainTabs: any;
   UserPage: undefined;
-  NewPost: undefined;
-  NewPostComplete: undefined;
-  NewPostPublished: undefined;
+  NewPost: any;
+  NewPostComplete: any;
+  NewPostPublished: any;
 };
 
 export type AuthStackParamList = {
@@ -16,4 +16,13 @@ export type MainTabsParamList = {
   Home: undefined;
   Profile: undefined;
   About: undefined;
+};
+
+export type NewPostCompleteParamList = {
+  postTitle: undefined;
+  postContent: undefined;
+  postImage: undefined;
+  postType: undefined;
+  postLatitude: undefined;
+  postLongitude: undefined;
 };

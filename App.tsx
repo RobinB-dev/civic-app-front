@@ -2,6 +2,7 @@ import React from "react";
 import Navigation from "./src/navigation";
 import { AuthProvider } from "./src/provider/AuthProvider";
 import { ThemeProvider } from "react-native-rapi-ui";
+
 // import { InMemoryCache, ApolloProvider } from "@apollo/client";
 // import ApolloClient from "apollo-boost";
 
@@ -9,7 +10,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 // Initialize Apollo Client
 const client = new ApolloClient({
-  uri: "http://localhost:4000/",
+  uri: "https://h3-proxy.services.quickpipes.io/team8/",
   cache: new InMemoryCache(),
 });
 

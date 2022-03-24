@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type ContextProps = {
   user: null | boolean;
@@ -14,6 +14,26 @@ interface Props {
   children: React.ReactNode;
 }
 
+const storeData = async (key: string, value: object) => {
+  try {
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem(key, jsonValue);
+  } catch (e) {
+    // saving error
+  }
+};
+
+const getData = async (key: string) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    if (value !== null) {
+      // value previously stored
+    }
+  } catch (e) {
+    // error reading value
+  }
+};
+
 const AuthProvider = (props: Props) => {
   // const auth = getAuth();
   // user null = loading
@@ -27,9 +47,11 @@ const AuthProvider = (props: Props) => {
   function checkLogin() {
     if (token) {
       // console.log("token", token);
+      storeData("@token", token);
       setUser(true);
     } else {
       // console.log("no token", token);
+      getData("@token");
       // setUser(false);
       setUser(true);
     }
