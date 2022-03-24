@@ -106,10 +106,10 @@ export default function ({
               flex: 3,
               paddingHorizontal: 20,
               paddingBottom: 20,
-              backgroundColor: isDarkmode ? themeColor.dark : themeColor.white,
+              backgroundColor: isDarkmode ? themeColor.dark : '#F7F7F7',
             }}
           >
-            <Text
+             <Text
               fontWeight="bold"
               size="h3"
               style={{
@@ -119,7 +119,18 @@ export default function ({
             >
               Register
             </Text>
-            <Text>Email</Text>
+            <TextInput
+              containerStyle={{ marginTop: 15 }}
+              placeholder="Nom d'utilisateur"
+              // value={email}
+              autoCapitalize="none"
+              autoCompleteType="off"
+              autoCorrect={false}
+              keyboardType="default"
+              // onChangeText={(text) => setEmail(text)}
+            />
+           
+            {/* <Text>Email</Text> */}
             <TextInput
               containerStyle={{ marginTop: 15 }}
               placeholder="Enter your email"
@@ -131,7 +142,7 @@ export default function ({
               onChangeText={(text) => setEmail(text)}
             />
 
-            <Text style={{ marginTop: 15 }}>Password</Text>
+            {/* <Text style={{ marginTop: 15 }}>Password</Text> */}
             <TextInput
               containerStyle={{ marginTop: 15 }}
               placeholder="Enter your password"
@@ -162,7 +173,7 @@ export default function ({
                 justifyContent: "center",
               }}
             >
-              <Text size="md">Already have an account?</Text>
+              <Text size="md">Déjà membre ?</Text>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("Login");
@@ -173,9 +184,10 @@ export default function ({
                   fontWeight="bold"
                   style={{
                     marginLeft: 5,
+                    color : "#2C60C6"
                   }}
                 >
-                  Login here
+                  Se connecter
                 </Text>
               </TouchableOpacity>
             </View>
@@ -197,6 +209,7 @@ export default function ({
                   fontWeight="bold"
                   style={{
                     marginLeft: 5,
+                    color : "#2C60C6"
                   }}
                 >
                   {isDarkmode ? "☀️ light theme" : "🌑 dark theme"}

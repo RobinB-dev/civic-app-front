@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type ContextProps = {
   user: null | boolean;
@@ -53,7 +53,7 @@ const AuthProvider = (props: Props) => {
       // console.log("no token", token);
       getData("@token");
       // setUser(false);
-      setUser(true);
+      setUser(false);
     }
   }
 

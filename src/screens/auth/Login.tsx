@@ -109,10 +109,10 @@ export default function ({
             >
               Login
             </Text>
-            <Text>Email</Text>
+            {/* <Text>Email</Text> */}
             <TextInput
               containerStyle={{ marginTop: 15 }}
-              placeholder="Enter your email"
+              placeholder="Adresse email"
               value={email}
               autoCapitalize="none"
               autoCompleteType="off"
@@ -121,10 +121,10 @@ export default function ({
               onChangeText={(text) => setEmail(text)}
             />
 
-            <Text style={{ marginTop: 15 }}>Password</Text>
+            {/* <Text style={{ marginTop: 15 }}>Password</Text> */}
             <TextInput
               containerStyle={{ marginTop: 15 }}
-              placeholder="Enter your password"
+              placeholder="Mot de passe"
               value={password}
               autoCapitalize="none"
               autoCompleteType="off"
@@ -163,6 +163,7 @@ export default function ({
                   fontWeight="bold"
                   style={{
                     marginLeft: 5,
+                    color : "#2C60C6"
                   }}
                 >
                   Register here
@@ -182,8 +183,13 @@ export default function ({
                   navigation.navigate("ForgetPassword");
                 }}
               >
-                <Text size="md" fontWeight="bold">
-                  Forget password
+                <Text 
+                size="md" 
+                fontWeight="bold"
+                style={{
+                  color : "#2C60C6"
+                }}>
+                  Mot de passe oublié ?
                 </Text>
               </TouchableOpacity>
             </View>

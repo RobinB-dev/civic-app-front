@@ -14,7 +14,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import DATA from "../provider/data.json";
 import USERS from "../provider/users.json";
-import { CardPost } from "../components/CardPost";
+import { CardPost } from "../components/CardPostCopy";
 import Loading from "../screens/utils/Loading";
 
 import { gql, useQuery, useMutation } from "@apollo/client";
@@ -130,12 +130,12 @@ const styles = StyleSheet.create({
     flex: 1,
     // marginTop: StatusBar.currentHeight || 0,
   },
-  item: {
-    backgroundColor: "#fefefe",
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
+  // item: {
+  //   backgroundColor: "#fefefe",
+  //   // padding: 20,
+  //   marginVertical: 8,
+  //   marginHorizontal: 16,
+  // },
   user: {
     fontSize: 17,
   },

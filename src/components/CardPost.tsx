@@ -8,7 +8,6 @@ import {
   useTheme,
   themeColor,
 } from "react-native-rapi-ui";
-import { AntDesign } from "@expo/vector-icons";
 
 export type RootStackParamList = {
   HomeScreen: undefined;
@@ -28,59 +27,48 @@ export const CardPost = ({ title, content }: any) => {
   };
 
   return (
-    <Layout>
-      <View style={styles.item}>
-        {/* <Pressable
-      onPress={() => {
-        {
-          navigation.navigate("SecondScreen", { userName: [user.username] });
-        }
-      }}
-    >
-      <Image
-        style={styles.userImg}
-        source={{
-          uri: user.picture,
-        }}
-      ></Image>
-      <Text style={styles.content}>{user.username}</Text>
-    </Pressable> */}
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.content}>{content}</Text>
-        <Text style={styles.content}>{"Roibjdfjkshqbfgnsdhlkfwbvfrjegf"}</Text>
-        <Section>
-          <View style={styles.buttonContainer}>
+    
+          // <View >
             <Pressable
+            style={styles.postContainer}
               onPress={onPressFunction}
-              style={[styles.button, isDarkmode ? styles.dark : styles.white]}
+              // style={[styles.button, isDarkmode ? styles.dark : styles.white]}
             >
-              <AntDesign name="like1" size={24} color="black" />
+             <Image
+              source={require('../../assets/images/Post1.png')}
+              fadeDuration={0}
+              style={styles.image}/>
+              <View style={styles.titleCont}>
+                <Image
+                source={require('../../assets/images/categoryIcon.png')}
+                style={styles.iconCat}
+                >
+                </Image>
+                <View>
+                  <Text style={styles.title}>{"Graffiti pas piqué des hannetons"}</Text>
+                  <Text style={styles.content}>{"Paris XIII (1.2km)"}</Text>
+                </View>
+              </View>
             </Pressable>
-            <Pressable
-              onPress={onPressFunction}
-              style={[styles.button, isDarkmode ? styles.dark : styles.white]}
-            >
-              <AntDesign name="dislike1" size={24} color="black" />
-            </Pressable>
-          </View>
-        </Section>
-      </View>
-    </Layout>
+          // </View>
+
   );
 };
 
 const styles = StyleSheet.create({
-  item: {
-    backgroundColor: "#cbcbcb23",
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
+  // item: {
+  //   backgroundColor: "#cbcbcb23",
+  //   padding: 20,
+  //   marginVertical: 8,
+  //   marginHorizontal: 16,
+  // },
   title: {
-    fontSize: 20,
+    fontSize: 14,
+    flexShrink: 1 ,
   },
   content: {
-    fontSize: 16,
+    fontSize: 10,
+    flex: 1,
   },
   white: {
     backgroundColor: themeColor.white100,
@@ -88,19 +76,33 @@ const styles = StyleSheet.create({
   dark: {
     backgroundColor: themeColor.dark,
   },
-  button: {
-    // flex: 2,
+  postContainer: {
     display: "flex",
-    padding: 10,
-    borderRadius: 4,
-    margin: 5,
-    backgroundColor: "oldlace",
-    alignSelf: "flex-start",
-    width: 20,
-    textAlign: "center",
-  },
-  buttonContainer: {
-    flexDirection: "row",
+    marginVertical: "10%",
+    marginHorizontal: 16,
+    // backgroundColor: "#ffffff",
+    width: 150,
+    height: 225,
     flexWrap: "wrap",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    
   },
+  image: { 
+    width: "100%",
+    height: "70%",
+    resizeMode: 'cover'
+  },
+  titleCont: {
+    marginTop:"5%",
+    marginRight:"2.5%",
+    display:"flex",
+    flexDirection:"row",
+    alignItems: "center",
+    flex: 1 ,
+  },
+  iconCat: {
+    marginRight:"5%",
+    margin: "2.5%"
+  }
 });

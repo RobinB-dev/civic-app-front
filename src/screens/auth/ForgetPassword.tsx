@@ -86,7 +86,7 @@ export default function ({
             </Text>
             <Text>Email</Text>
             <TextInput
-              containerStyle={{ marginTop: 15 }}
+              containerStyle={{ marginTop: 15 , marginBottom:15,}}
               placeholder="Enter your email"
               value={email}
               autoCapitalize="none"
@@ -125,6 +125,7 @@ export default function ({
                   fontWeight="bold"
                   style={{
                     marginLeft: 5,
+                    color : "#2C60C6"
                   }}
                 >
                   Login here
@@ -149,6 +150,7 @@ export default function ({
                   fontWeight="bold"
                   style={{
                     marginLeft: 5,
+                    color : "#2C60C6"
                   }}
                 >
                   {isDarkmode ? "☀️ light theme" : "🌑 dark theme"}

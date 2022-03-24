@@ -9,9 +9,9 @@ export default ({ title, focused }: { title: string; focused: boolean }) => {
         marginBottom: 5,
         color: focused
           ? isDarkmode
-            ? themeColor.white100
-            : themeColor.primary
-          : "rgb(143, 155, 179)",
+          ? "#FF4070"
+          : "#FF4070"
+        : "#2C60C6",
         fontSize: 10,
       }}
     >
