@@ -2,6 +2,8 @@ export type MainStackParamList = {
   MainTabs: undefined;
   UserPage: undefined;
   NewPost: undefined;
+  NewPostComplete: undefined;
+  NewPostPublished: undefined;
 };
 
 export type AuthStackParamList = {

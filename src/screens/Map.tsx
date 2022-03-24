@@ -75,22 +75,7 @@ export default function ({
   const region = useRef(regionState);
 
   const handleAdd = () => {
-    Alert.alert(
-      "Erreur système GRAVE 😱",
-      "Votre téléphone de la marque du téléphone que vous utilisez a été piraté, pour conjurer le sort, veuillez envoyer IMMÉDIATEMENT la somme de 500€ TTC à Leo Largillet par PayPal.",
-      [
-        { text: "Je paye 😇", style: "default" },
-        {
-          text: "Je détruis mon téléphone 😨",
-          style: "destructive",
-          onPress: () => {
-            Linking.openURL(
-              "https://st.depositphotos.com/1074956/3794/i/600/depositphotos_37948085-stock-photo-smartphone-with-broken-screen.jpg"
-            );
-          },
-        },
-      ]
-    );
+    navigation.navigate('NewPost', {location: location.coords})
   };
 
   const handleLocate = () => {
