@@ -34,14 +34,21 @@ import { StatusBar } from "expo-status-bar";
 import { gql, useMutation } from "@apollo/client";
 
 const CREATE_POST = gql`
-  mutation ($title: String, $content: String, $image: String, $tag: String) {
+  mutation (
+    $title: String
+    $content: String
+    $image: String
+    $tag: String
+    $lat: String
+    $lng: String
+  ) {
     createPost(
       title: $title
       content: $content
       image: $image
       tag: $tag
-      lat: "lat"
-      lng: "lng"
+      lat: $lat
+      lng: $lng
     ) {
       tag
     }
@@ -56,6 +63,11 @@ export default function ({
   const [progress, setProgress] = useState(73);
   const [createPost, { data, loading, error }] = useMutation(CREATE_POST);
 
+  console.log("lat ", JSON.stringify(route.params?.postLatitude));
+  console.log("lat ", JSON.stringify(route.params?.postLatitude));
+  console.log("lng ", route.params?.postLongitude);
+  // console.log(typeof 2);
+
   useEffect(() => {
     createPost({
       variables: {
@@ -63,15 +75,11 @@ export default function ({
         content: route.params?.postContent,
         image: route.params?.postImage,
         tag: route.params?.postType,
-        lat: route.params?.postLatitude,
-        lng: route.params?.postLongitude,
+        lat: JSON.stringify(route.params?.postLatitude),
+        lng: JSON.stringify(route.params?.postLongitude),
       },
     });
   }, []);
-
-  useEffect(() => {
-    console.log("data: ", data, loading);
-  }, [data, loading]);
 
   return (
     <View style={styles.fullScreen}>

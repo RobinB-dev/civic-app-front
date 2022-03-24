@@ -26,6 +26,10 @@ const POSTS_QUERY = gql`
       id
       content
       createdAt
+      tag
+      title
+      lat
+      lng
     }
   }
 `;
@@ -37,10 +41,9 @@ const findUser = (_userId: number) => {
 export default function ({
   navigation,
 }: NativeStackScreenProps<MainStackParamList, "MainTabs">) {
-  const [posts, setPosts] = useState(DATA);
   const { isDarkmode, setTheme } = useTheme();
-
   const { data, loading, error } = useQuery(POSTS_QUERY);
+  const [posts, setPosts] = useState(testObj(data, "getPosts"));
 
   // console.log("posts : ", data);
   // console.log("isLoading : ", loading);
@@ -49,6 +52,7 @@ export default function ({
   useEffect(() => {
     if (!loading) {
       if (data) {
+        console.log("rererer ", testObj(data, "getPosts"));
         // console.log("not loading : ", loading);
         // console.log("posts : ", data);
         setPosts(testObj(data, "getPosts"));
@@ -56,7 +60,7 @@ export default function ({
     } else {
       // console.log("loading : ", loading);
     }
-  }, [loading]);
+  }, [loading, data]);
 
   const renderItem = ({ item }: any) => (
     <CardPost

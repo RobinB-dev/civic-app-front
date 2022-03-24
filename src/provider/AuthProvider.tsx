@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type ContextProps = {
   user: null | boolean;
@@ -27,8 +27,6 @@ const getData = async (key: string) => {
   try {
     const value = await AsyncStorage.getItem(key);
     if (value !== null) {
-      console.log("rrrrr", typeof value);
-
       // value previously stored
       return value;
     }
@@ -46,7 +44,7 @@ const AuthProvider = (props: Props) => {
 
   // test1@fm.com
   useEffect(() => {
-    console.log("oui", AsyncStorage.getItem("@token"));
+    // console.log("oui", AsyncStorage.getItem("@token"));
 
     checkLogin();
   }, [token]);
@@ -58,10 +56,10 @@ const AuthProvider = (props: Props) => {
   function checkToken() {
     getData("@token").then((value) => {
       if (value) {
-        console.log("already set", value);
+        // console.log("already set", value);
         setToken(value);
 
-        console.log(value);
+        // console.log(value);
 
         // setToken(JSON.parse(JSON.stringify(value)));
       } else {
@@ -73,13 +71,13 @@ const AuthProvider = (props: Props) => {
   async function checkLogin() {
     if (token !== null) {
       storeData("@token", true);
-      console.log(" token", token);
+      // console.log(" token", token);
 
       setUser(true);
     } else {
-      // console.log("no token", token);
-      getData("@token");
-      // setUser(false);
+      // storeData("@token", token);
+      // console.log("no token", false);
+      // getData("@token");
       setUser(false);
     }
   }
