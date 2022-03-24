@@ -31,7 +31,7 @@ export const CardPost = ({
   console.log(",av", title);
 
   return (
-    // <View >
+    <View style={{marginLeft: 30, marginRight :30,}} >
     <Pressable
       style={styles.postContainer}
       onPress={() => {
@@ -63,18 +63,10 @@ export const CardPost = ({
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.content}>{content}</Text>
         </View>
-
+        <View style={styles.btnCont}>
         <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            backgroundColor: "#FCF4ED",
-            borderRadius: 20,
-            padding: 5,
-            borderWidth: 1,
-            borderColor: "#2C60C6",
-          }}
+          style={styles.categoryCont
+          }
         >
           <Image
             source={require("../../assets/images/categoryIconList.png")}
@@ -82,11 +74,25 @@ export const CardPost = ({
           ></Image>
           <Text style={{ fontSize: 10, color: "#191919" }}>Problème</Text>
         </View>
+        
+        <View
+          style={styles.btn        
+          }
+        >
+          <Image
+            source={require("../../assets/images/icons/eyesmall.png")}
+            style={{width:20, height:20,}}
+          ></Image>
+          <Pressable>
+          <Text style={{ fontSize: 10, color: "#F7F7F7" }}>Voir</Text>
+          </Pressable>
+        </View>
+      </View>
       </View>
       <View style={styles.separator}></View>
     </Pressable>
 
-    // </View>
+     </View>
   );
 };
 
@@ -99,16 +105,17 @@ const styles = StyleSheet.create({
   // },
   title: {
     // fontWeight: 600,
-    fontSize: 14,
-    // flexShrink: 1 ,
+    fontSize: 18,
+    flexShrink: 1 ,
     // width: "60%",
-    color: "#2C60C6",
+    color: "#DADADA",
     margin: 0,
     padding: 0,
   },
   content: {
     fontSize: 10,
-    // flex: 1,
+    flex: 1,
+    flexShrink:1,
   },
   white: {
     backgroundColor: themeColor.white100,
@@ -120,19 +127,16 @@ const styles = StyleSheet.create({
     display: "flex",
     marginVertical: "10%",
     flexDirection: "row",
-    // marginHorizontal: 16,s
-    // backgroundColor: "#ffffff",
-    width: 325,
-    height: 100,
+    width: "100%",
     flexWrap: "wrap",
     justifyContent: "flex-start",
     alignItems: "flex-start",
   },
   image: {
-    width: "30%",
+    width: "40%",
     height: "100%",
     resizeMode: "cover",
-    marginRight: 10,
+    marginRight: "8%",
     borderRadius: 8,
   },
   titleCont: {
@@ -142,7 +146,36 @@ const styles = StyleSheet.create({
     // flexDirection:"row",
     alignItems: "flex-start",
     justifyContent: "flex-start",
-    // flex: 2 ,
+    flex:1,
+  },
+
+  categoryCont:{
+    display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: "#FCF4ED",
+            borderRadius: 20,
+            padding: 3,
+            borderWidth: 1,
+            borderColor: "#DADADA",
+            marginRight: "5%"
+  },
+
+  btn:{
+    display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: "#FF4070",
+            borderRadius: 20,
+            padding: 3,
+            paddingRight:"6%",
+            borderWidth: 1,
+            borderColor: "#DADADA",
+  },
+
+  btnCont: {
+    flexDirection:"row",
+    justifyContent: "space-between",
   },
 
   username: {
@@ -161,7 +194,7 @@ const styles = StyleSheet.create({
   textCont: {
     justifyContent: "center",
     // alignItems : "center",
-    flex: 2,
+    flex: 1,
   },
 
   iconCat: {
