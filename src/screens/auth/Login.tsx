@@ -30,6 +30,21 @@ const LOGIN_EMAIL = gql`
   }
 `;
 
+const CREATE_POST = gql`
+  mutation {
+    createPost(
+      content: "content"
+      image: "ererer"
+      lat: "erer"
+      lng: "eee"
+      tag: "eeee"
+      title: "title"
+    ) {
+      tag
+    }
+  }
+`;
+
 export default function ({
   navigation,
 }: NativeStackScreenProps<AuthStackParamList, "Login">) {
@@ -43,6 +58,7 @@ export default function ({
   // const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    console.log(data, error);
     if (data) {
       const user = testObj(data, "login");
       const token = testObj(user, "token");

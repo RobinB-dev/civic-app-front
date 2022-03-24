@@ -31,6 +31,22 @@ import { Camera } from "expo-camera";
 
 import USERS from "../provider/users.json";
 import { StatusBar } from "expo-status-bar";
+import { gql, useMutation } from "@apollo/client";
+
+const CREATE_POST = gql`
+  mutation ($title: String, $content: String, $image: String, $tag: String) {
+    createPost(
+      title: $title
+      content: $content
+      image: $image
+      tag: $tag
+      lat: "lat"
+      lng: "lng"
+    ) {
+      tag
+    }
+  }
+`;
 
 export default function ({
   navigation,
@@ -38,14 +54,24 @@ export default function ({
 }: NativeStackScreenProps<MainStackParamList, "NewPostPublished">) {
   const [level, setLevel] = useState(12);
   const [progress, setProgress] = useState(73);
+  const [createPost, { data, loading, error }] = useMutation(CREATE_POST);
 
-  // Values for communication with Back-end
-  const postTitle = route.params?.postTitle;
-  const postContent = route.params?.postContent;
-  const postImage = route.params?.postImage;
-  const postType = route.params?.postType;
-  const postLatitude = route.params?.postLatitude;
-  const postLongitude = route.params?.postLongitude;
+  useEffect(() => {
+    createPost({
+      variables: {
+        title: route.params?.postTitle,
+        content: route.params?.postContent,
+        image: route.params?.postImage,
+        tag: route.params?.postType,
+        lat: route.params?.postLatitude,
+        lng: route.params?.postLongitude,
+      },
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log("data: ", data, loading);
+  }, [data, loading]);
 
   return (
     <View style={styles.fullScreen}>
