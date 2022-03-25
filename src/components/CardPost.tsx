@@ -46,6 +46,7 @@ export const CardPost = ({
       }}
     >
       <Image
+        // source={image}
         source={require("../../assets/images/Post1.png")}
         fadeDuration={0}
         style={styles.image}
@@ -72,7 +73,7 @@ export const CardPost = ({
             source={require("../../assets/images/categoryIconList.png")}
             style={styles.iconCat}
           ></Image>
-          <Text style={{ fontSize: 10, color: "#191919" }}>Problème</Text>
+          <Text style={{ fontSize: 10, color: "#191919" }}>{tag}</Text>
         </View>
         
         <View
@@ -158,7 +159,8 @@ const styles = StyleSheet.create({
             padding: 3,
             borderWidth: 1,
             borderColor: "#DADADA",
-            marginRight: "5%"
+            marginRight: "5%",
+
   },
 
   btn:{
@@ -191,17 +193,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
+  
+  iconCat: {
+    marginRight: "5%",
+    // margin: "2.5%"
+  },
+  
   textCont: {
     justifyContent: "center",
     // alignItems : "center",
     flex: 1,
   },
-
-  iconCat: {
-    marginRight: "5%",
-    // margin: "2.5%"
-  },
-
   separator: {
     width: "100%",
     height: 1,

@@ -36,9 +36,9 @@ const POSTS_QUERY = gql`
   }
 `;
 
-const findUser = (_userId: number) => {
-  return USERS.find((o: { userId: number }) => o.userId === _userId);
-};
+// const findUser = (_userId: number) => {
+//   return USERS.find((o: { userId: number }) => o.userId === _userId);
+// };
 
 export default function ({
   navigation,
