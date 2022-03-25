@@ -148,7 +148,7 @@ export default function ({
   return (
     <Layout>
       <View style={styles.container}>
-        {Platform.OS === "ios" ? (
+        {Platform.OS === "ios" || Platform.OS === "android" ? (
           <MapView
             style={styles.map}
             region={region.current}
