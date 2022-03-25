@@ -7,7 +7,11 @@ import NewPost from "../screens/NewPost";
 import NewPostComplete from "../screens/NewPostComplete";
 import NewPostPublished from "../screens/NewPostPublished";
 import SinglePost from "../screens/SinglePost";
+<<<<<<< Updated upstream
 import UserProfile from "../screens/UserProfile";
+=======
+import Onboarding from "../screens/Onboarding";
+>>>>>>> Stashed changes
 
 const MainStack = createNativeStackNavigator();
 const Main = () => {
@@ -19,6 +23,7 @@ const Main = () => {
     >
       <MainStack.Screen name="MainTabs" component={MainTabs} />
       <MainStack.Screen name="UserPage" component={UserPage} />
+      <MainStack.Screen name="Onboarding" component={Onboarding} />
       <MainStack.Screen name="NewPostPublished" component={NewPostPublished} />
       <MainStack.Screen name="NewPost" component={NewPost} />
       <MainStack.Screen name="NewPostComplete" component={NewPostComplete} />

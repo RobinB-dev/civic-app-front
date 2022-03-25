@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, FlatList, StyleSheet, Pressable, Image } from "react-native";
+import { View, FlatList, StyleSheet, Pressable, Image, TouchableOpacity } from "react-native";
 import { MainStackParamList } from "../types/navigation";
 import { getAuth, signOut } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -102,6 +102,10 @@ export default function ({
           }
         }}
       />
+
+      <TouchableOpacity onPress={() => {navigation.navigate('Onboarding')}}>
+        <Text>Go to Onboarding</Text>
+      </TouchableOpacity>
 
       <View
         style={{
