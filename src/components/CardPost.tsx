@@ -23,12 +23,11 @@ export const CardPost = ({
   content,
   navigation,
   id,
+  uid,
   tag,
   image,
 }: any) => {
   const { isDarkmode, setTheme } = useTheme();
-
-  console.log(",av", title);
 
   return (
     // <View >
@@ -39,6 +38,7 @@ export const CardPost = ({
         navigation.navigate("SinglePost", {
           id: id,
           tag: tag,
+          uid: uid,
           content: content,
           title: title,
           image: image,
@@ -56,7 +56,7 @@ export const CardPost = ({
             style={styles.iconCat}
             source={require("../../assets/images/userpic.png")}
           ></Image>
-          <Text style={styles.username}>Jackie Chan</Text>
+          <Text style={styles.username}>{uid}</Text>
         </View>
 
         <View style={styles.textCont}>

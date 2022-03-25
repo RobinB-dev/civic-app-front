@@ -61,10 +61,12 @@ export default function ({
       const user = testObj(data, "register");
       const token = testObj(user, "token");
       const error = testObj(user, "error");
+      const uid = testObj(user, "uid");
       if (error) {
         setAuthError(error);
       }
       auth.setToken(token);
+      auth.setUid(uid);
     }
   }, [data]);
 

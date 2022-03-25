@@ -11,14 +11,61 @@ import {
 import { MainStackParamList } from "../types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Layout, Section, useTheme } from "react-native-rapi-ui";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { AnimatedRegion, LatLng, Marker } from "react-native-maps";
 import * as Location from "expo-location";
+import { gql, useQuery, useMutation } from "@apollo/client";
+import { testObj } from "../decl/functions.decl";
+
+const POSTS_QUERY = gql`
+  query Posts {
+    getPosts {
+      id
+      uid
+      content
+      title
+      lat
+      lng
+    }
+  }
+`;
 
 export default function ({
   navigation,
 }: NativeStackScreenProps<MainStackParamList, "MainTabs">) {
   const [level, setLevel] = useState(12);
   const [progress, setProgress] = useState(73);
+  const [markers, setMarkers] = useState([]);
+  const [markersDisplay, setMarkersDisplay] = useState<any>([]);
+  const MarkersQuery = useQuery(POSTS_QUERY);
+  let tableau: {
+    coordinate: { latitude: number; longitude: number };
+    title: string;
+    description: string;
+  }[] = [];
+
+  useEffect(() => {
+    markers.forEach((marker) => {
+      tableau.push({
+        coordinate: {
+          latitude: parseFloat(marker["lat"]),
+          longitude: parseFloat(marker["lng"]),
+        },
+        title: marker["title"],
+        description: marker["content"],
+      });
+    });
+    setMarkersDisplay(tableau);
+  }, [markers]);
+
+  useEffect(() => {
+    if (!MarkersQuery.loading) {
+      if (MarkersQuery.data) {
+        setMarkers(testObj(MarkersQuery.data, "getPosts"));
+      }
+    } else {
+      // console.log("loading : ", loading);
+    }
+  }, [MarkersQuery.loading, MarkersQuery.data]);
 
   const [location, setLocation] = useState({
     coords: {
@@ -48,7 +95,7 @@ export default function ({
     })();
   }, []);
 
-  const markers = [
+  const markers2 = [
     {
       coordinate: { latitude: 48.857786, longitude: 2.339314 },
       title: "Trottinette dans la Seine ????",
@@ -75,7 +122,7 @@ export default function ({
   const region = useRef(regionState);
 
   const handleAdd = () => {
-    navigation.navigate('NewPost', {location: location.coords})
+    navigation.navigate("NewPost", { location: location.coords });
   };
 
   const handleLocate = () => {
@@ -91,6 +138,7 @@ export default function ({
       longitudeDelta: 0.0025,
     });
   };
+  // console.log("ddede", markers2, tableau);
 
   useEffect(() => {
     region.current = regionState;
@@ -104,14 +152,23 @@ export default function ({
           region={region.current}
           showsUserLocation={true}
         >
-          {markers.map((marker, index) => (
-            <Marker
-              key={index}
-              coordinate={marker.coordinate}
-              title={marker.title}
-              description={marker.description}
-            ></Marker>
-          ))}
+          {markersDisplay.map(
+            (
+              marker: {
+                coordinate: LatLng | AnimatedRegion;
+                title: string | undefined;
+                description: string | undefined;
+              },
+              index: React.Key | null | undefined
+            ) => (
+              <Marker
+                key={index}
+                coordinate={marker.coordinate}
+                title={marker.title}
+                description={marker.description}
+              ></Marker>
+            )
+          )}
         </MapView>
         <TouchableOpacity style={styles.addToMapButton} onPress={handleAdd}>
           <View style={styles.addToMapButtonImageBackground}></View>

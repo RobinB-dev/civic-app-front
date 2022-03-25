@@ -28,7 +28,7 @@ export default function ({
   route,
 }: NativeStackScreenProps<MainStackParamList, "SinglePost">) {
   const { isDarkmode, setTheme } = useTheme();
-  const { id, content, title, tag, image }: any = route.params;
+  const { id, content, title, tag, image, uid }: any = route.params;
 
   //   console.log("vreo", route.params);
 
@@ -67,6 +67,7 @@ export default function ({
         }}
       >
         <Section>
+          <Text>uid :{uid}</Text>
           <Text>id :{id}</Text>
           <Text>tag :{tag}</Text>
           <Text>content :{content}</Text>

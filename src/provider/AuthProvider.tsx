@@ -43,7 +43,7 @@ const AuthProvider = (props: Props) => {
   // user null = loading
   const [user, setUser] = useState<null | boolean>(false);
   const [token, setToken] = useState<any>(null);
-  const [uid, setUid] = useState<string>();
+  const [uid, setUid] = useState<string>("defaut");
 
   // test1@fm.com
   useEffect(() => {

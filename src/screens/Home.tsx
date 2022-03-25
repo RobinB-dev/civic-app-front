@@ -24,6 +24,7 @@ const POSTS_QUERY = gql`
   query Posts {
     getPosts {
       id
+      uid
       content
       createdAt
       tag
@@ -43,30 +44,31 @@ export default function ({
   navigation,
 }: NativeStackScreenProps<MainStackParamList, "MainTabs">) {
   const { isDarkmode, setTheme } = useTheme();
-  const { data, loading, error } = useQuery(POSTS_QUERY);
-  const [posts, setPosts] = useState(testObj(data, "getPosts"));
+  const PostQuery = useQuery(POSTS_QUERY);
+  const [posts, setPosts] = useState(testObj(PostQuery.data, "getPosts"));
 
   // console.log("posts : ", data);
   // console.log("isLoading : ", loading);
   // console.log("error : ", error);
 
   useEffect(() => {
-    if (!loading) {
-      if (data) {
-        console.log("rererer ", testObj(data, "getPosts"));
+    if (!PostQuery.loading) {
+      if (PostQuery.data) {
+        // console.log("rererer ", testObj(PostQuery.data, "getPosts"));
         // console.log("not loading : ", loading);
-        console.log("posts : ", data);
-        setPosts(testObj(data, "getPosts"));
+        // console.log("posts : ", PostQuery.data);
+        setPosts(testObj(PostQuery.data, "getPosts"));
       }
     } else {
       // console.log("loading : ", loading);
     }
-  }, [loading, data]);
+  }, [PostQuery.loading, PostQuery.data]);
 
   const renderItem = ({ item }: any) => (
     <CardPost
       title={item.title}
       content={item.content}
+      uid={item.uid}
       tag={item.tag}
       navigation={navigation}
       id={item.id}
@@ -108,8 +110,8 @@ export default function ({
           justifyContent: "center",
         }}
       >
-        {loading && <Loading />}
-        {!loading && (
+        {PostQuery.loading && <Loading />}
+        {!PostQuery.loading && (
           <FlatList
             data={posts}
             renderItem={renderItem}

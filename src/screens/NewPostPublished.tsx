@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import {
   View,
   Image,
@@ -32,9 +32,11 @@ import { Camera } from "expo-camera";
 import USERS from "../provider/users.json";
 import { StatusBar } from "expo-status-bar";
 import { gql, useMutation } from "@apollo/client";
+import { AuthContext } from "../provider/AuthProvider";
 
 const CREATE_POST = gql`
   mutation (
+    $uid: String
     $title: String
     $content: String
     $image: String
@@ -43,6 +45,7 @@ const CREATE_POST = gql`
     $lng: String
   ) {
     createPost(
+      uid: $uid
       title: $title
       content: $content
       image: $image
@@ -62,15 +65,18 @@ export default function ({
   const [level, setLevel] = useState(12);
   const [progress, setProgress] = useState(73);
   const [createPost, { data, loading, error }] = useMutation(CREATE_POST);
+  const auth = useContext(AuthContext);
 
   console.log("lat ", JSON.stringify(route.params?.postLatitude));
   console.log("lat ", JSON.stringify(route.params?.postLatitude));
   console.log("lng ", route.params?.postLongitude);
-  // console.log(typeof 2);
+
+  console.log(auth.uid);
 
   useEffect(() => {
     createPost({
       variables: {
+        uid: auth.uid,
         title: route.params?.postTitle,
         content: route.params?.postContent,
         image: route.params?.postImage,
