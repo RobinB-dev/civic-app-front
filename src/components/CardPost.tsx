@@ -183,6 +183,7 @@ const styles = StyleSheet.create({
   username: {
     color: "#FF4070",
     fontSize: 12,
+    flexShrink:1,
   },
 
   usernameCont: {
