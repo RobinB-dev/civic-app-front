@@ -4,6 +4,7 @@ export type MainStackParamList = {
   NewPost: any;
   NewPostComplete: any;
   NewPostPublished: any;
+  Onboarding: any;
   SinglePost: any;
   UserProfile: any;
 };
