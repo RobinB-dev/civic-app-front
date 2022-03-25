@@ -7,6 +7,7 @@ import {
   Text,
   Alert,
   Linking,
+  Platform,
 } from "react-native";
 import { MainStackParamList } from "../types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -147,29 +148,34 @@ export default function ({
   return (
     <Layout>
       <View style={styles.container}>
-        <MapView
-          style={styles.map}
-          region={region.current}
-          showsUserLocation={true}
-        >
-          {markersDisplay.map(
-            (
-              marker: {
-                coordinate: LatLng | AnimatedRegion;
-                title: string | undefined;
-                description: string | undefined;
-              },
-              index: React.Key | null | undefined
-            ) => (
-              <Marker
-                key={index}
-                coordinate={marker.coordinate}
-                title={marker.title}
-                description={marker.description}
-              ></Marker>
-            )
-          )}
-        </MapView>
+        {Platform.OS === "ios" ? (
+          <MapView
+            style={styles.map}
+            region={region.current}
+            showsUserLocation={true}
+          >
+            {markersDisplay.map(
+              (
+                marker: {
+                  coordinate: LatLng | AnimatedRegion;
+                  title: string | undefined;
+                  description: string | undefined;
+                },
+                index: React.Key | null | undefined
+              ) => (
+                <Marker
+                  key={index}
+                  coordinate={marker.coordinate}
+                  title={marker.title}
+                  description={marker.description}
+                ></Marker>
+              )
+            )}
+          </MapView>
+        ) : (
+          <Text>Not suported</Text>
+        )}
+
         <TouchableOpacity style={styles.addToMapButton} onPress={handleAdd}>
           <View style={styles.addToMapButtonImageBackground}></View>
           <Image
