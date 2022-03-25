@@ -86,7 +86,7 @@ export default function ({
   return (
     <Layout>
       <TopNav
-        middleContent="Home"
+        middleContent="Fil d'actualités"
         rightContent={
           <Ionicons
             name={isDarkmode ? "sunny" : "moon"}
@@ -104,8 +104,12 @@ export default function ({
       />
 
       <TouchableOpacity onPress={() => {navigation.navigate('Onboarding')}}>
-        <Text>Go to Onboarding</Text>
+        <View style={{justifyContent:"center", alignItems:'center', width: '100%', backgroundColor:'#FF4070', flexDirection:"row"}}>
+          <Image source={require('../../assets/images/icons/info.png')} style={{height:15, resizeMode:"contain"}}></Image>
+        <Text style={{padding: 5, fontSize:16, color:"#F7F7F7"}}>Embarquement</Text>
+        </View>
       </TouchableOpacity>
+    
 
       <View
         style={{
@@ -122,19 +126,19 @@ export default function ({
             keyExtractor={(posts): any => posts.id}
           />
         )}
-        <Pressable
-          onPress={onPressFunction}
-          style={[styles.AddButton, isDarkmode ? styles.dark : styles.white]}
-        >
-          <View>
-            <Ionicons
-              name="add"
-              size={24}
-              color={isDarkmode ? themeColor.white100 : themeColor.dark}
-            />
-          </View>
-        </Pressable>
-      </View>
+        </View>
+        
+          <TouchableOpacity style={styles.addToMapButton}>
+          <View style={styles.addToMapButtonImageBackground}></View>
+          <Image
+            style={styles.addToMapButtonImage}
+            source={require("../../assets/images/add-to-map.png")}
+          ></Image>
+        </TouchableOpacity>
+          {/* <View>
+            <Image source={require("../../assets/images/icons/plus.png")}></Image>
+          </View> */}
+      
     </Layout>
   );
 }
@@ -176,5 +180,30 @@ const styles = StyleSheet.create({
   },
   dark: {
     backgroundColor: themeColor.dark,
+  },
+
+  
+  addToMapButton: {
+    position: "absolute",
+    width: 60,
+    height: 60,
+    bottom: 35,
+    right: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  addToMapButtonImage: {
+    width: 60,
+    height: 60,
+    resizeMode: "contain",
+    borderWidth:1,
+  },
+
+  addToMapButtonImageBackground: {
+    position: "absolute",
+    width: 35,
+    height: 35,
+    backgroundColor: "#FFFFFF",
   },
 });

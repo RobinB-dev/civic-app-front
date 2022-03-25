@@ -72,7 +72,7 @@ export default function ({
       <View style={styles.pageContainer}>
         
         <ScrollView showsVerticalScrollIndicator={false} style={styles.postContainer}>
-        
+          
           <Pressable
 
             style={styles.usernameCont}
@@ -81,24 +81,22 @@ export default function ({
               navigation.navigate("UserProfile", { uid: uid });
             }}
           >
-            <Image
-              resizeMode="contain"
-              style={{
-                height: 20,
-                width: 20,
-              }}
-              source={require("../../assets/images/userpic.png")}
-            ></Image>
+            
             <Text style={styles.username}>Jackie Chan</Text>
           </Pressable>
+          
+         
           <Image
             resizeMode="contain"
             style={styles.image}
             source={{
               uri: image,
             }}
-          />
+          /> 
+          
+          <View style={{flexDirection:"row", justifyContent:"space-between"}}>
           <View style={styles.categoryCont}>
+         
             <Image
               source={require("../../assets/images/categoryIconList.png")}
               style={styles.iconCat}
@@ -106,6 +104,8 @@ export default function ({
             <Text style={{ fontSize: 10, color: "#191919", marginRight: 5 }}>
               {tag}
             </Text>
+          </View>
+          <Image style={{resizeMode:"contain",width:20, opacity:0.5}} source={require('../../assets/images/icons/checkGrey.png')}></Image>
           </View>
           <View>
             <Text style={styles.title}>{title}</Text>
@@ -351,7 +351,7 @@ const styles = StyleSheet.create({
     padding: 5,
     borderWidth: 1,
     borderColor: "#DADADA",
-    // alignSelf: "flex-start",
+    color: "#838383",
     // marginVertical: 10,
   },
 
