@@ -197,7 +197,6 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     resizeMode: "contain",
-    borderWidth:1,
   },
 
   addToMapButtonImageBackground: {

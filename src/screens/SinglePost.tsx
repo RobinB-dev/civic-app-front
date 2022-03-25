@@ -81,7 +81,10 @@ export default function ({
               navigation.navigate("UserProfile", { uid: uid });
             }}
           >
-            
+            <Image
+            style={styles.iconCat}
+            source={require("../../assets/images/userpic.png")}
+          ></Image>
             <Text style={styles.username}>Jackie Chan</Text>
           </Pressable>
           
@@ -224,7 +227,7 @@ export default function ({
               <Text style={{fontSize: 10, color: "#838383", }}>25/03/22 à 5h35</Text>
             </View>
           </View>
-          <View>
+          {/* <View> */}
           <Pressable
 
               style={styles.usernameCont}
@@ -246,7 +249,7 @@ export default function ({
             <Text style={styles.content}>Sed commodo leo nulla tristique urna sed quam quis. Tempor, massa nam fames faucibus.</Text>
             <View style={{alignItems: "flex-end", borderBottomWidth:1, borderBottomColor:"#DADADA", marginBottom:30,}}>
               <Text style={{fontSize: 10, color: "#838383", }}>25/03/22 à 5h35</Text>
-            </View>
+            {/* </View> */}
           </View>
           <View>
           <Pressable

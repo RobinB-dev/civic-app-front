@@ -92,7 +92,7 @@ export default function ({
   return (
     <Layout>
       <TopNav
-        middleContent="Home"
+        middleContent="Profil"
         rightContent={
           <Ionicons
             name={"settings"}
