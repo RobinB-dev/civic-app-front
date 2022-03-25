@@ -2,7 +2,6 @@ import React from "react";
 import Navigation from "./src/navigation";
 import { AuthProvider } from "./src/provider/AuthProvider";
 import { ThemeProvider } from "react-native-rapi-ui";
-
 // import { InMemoryCache, ApolloProvider } from "@apollo/client";
 // import ApolloClient from "apollo-boost";
 
@@ -23,7 +22,7 @@ export default function App() {
 
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider theme="dark" images={images}>
+      <ThemeProvider theme="light" images={images}>
         <AuthProvider>
           <Navigation />
         </AuthProvider>

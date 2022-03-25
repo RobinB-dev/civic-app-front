@@ -47,8 +47,8 @@ export default function ({
   const RootStack = createNativeStackNavigator();
   const { isDarkmode, setTheme } = useTheme();
   const auth = useContext(AuthContext);
-  const [userObj, setUserObj] = useState(USERS[0]);
   const [dataUser, { data, loading, error }] = useMutation(USER_QUERY);
+  const [userObj, setUserObj] = useState(USERS[0]);
 
   useEffect(() => {
     // console.log("error : ", error);
@@ -59,7 +59,7 @@ export default function ({
     } else {
       // console.log("loading : ", loading);
     }
-  }, [data]);
+  }, [data, loading]);
 
   // useEffect(() => {
   //   console.log("render 2");
@@ -76,7 +76,7 @@ export default function ({
     useCallback(() => {
       // Do something when the screen is focused
 
-      console.log("render 1", data);
+      // console.log("render 1", data);
       dataUser({
         variables: {
           uid: auth.uid,

@@ -23,24 +23,6 @@ const MainTabs = () => {
       }}
     >
       {/* these icons using Ionicons */}
-      
-
-      <Tabs.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarLabel: ({ focused }) => (
-            <TabBarText focused={focused} title="Profil" />
-          ),
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon
-            focused={focused}
-            focusImage={require("../../assets/images/icons/iconProfActive.png")}
-            unFocusImage={require("../../assets/images/icons/iconProf.png")}
-          />
-          ),
-        }}
-      />
 
       <Tabs.Screen
         name="Acueil"
@@ -51,16 +33,15 @@ const MainTabs = () => {
           ),
           tabBarIcon: ({ focused }) => (
             <TabBarIcon
-            focused={focused}
-            focusImage={require("../../assets/images/icons/iconFeedActive.png")}
-            unFocusImage={require("../../assets/images/icons/iconFeed.png")}
-          />
+              focused={focused}
+              focusImage={require("../../assets/images/icons/iconFeedActive.png")}
+              unFocusImage={require("../../assets/images/icons/iconFeed.png")}
+            />
           ),
         }}
       />
-    
 
-        <Tabs.Screen
+      <Tabs.Screen
         name="Carte"
         component={Map}
         options={{
@@ -69,14 +50,29 @@ const MainTabs = () => {
           ),
           tabBarIcon: ({ focused }) => (
             <TabBarIcon
-            focused={focused}
-            focusImage={require("../../assets/images/icons/iconMapActive.png")}
-            unFocusImage={require("../../assets/images/icons/iconMap.png")}
-          />
+              focused={focused}
+              focusImage={require("../../assets/images/icons/iconMapActive.png")}
+              unFocusImage={require("../../assets/images/icons/iconMap.png")}
+            />
           ),
         }}
       />
-
+      <Tabs.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarLabel: ({ focused }) => (
+            <TabBarText focused={focused} title="Profil" />
+          ),
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon
+              focused={focused}
+              focusImage={require("../../assets/images/icons/iconProfActive.png")}
+              unFocusImage={require("../../assets/images/icons/iconProf.png")}
+            />
+          ),
+        }}
+      />
     </Tabs.Navigator>
   );
 };

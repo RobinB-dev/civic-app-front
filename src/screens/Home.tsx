@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { View, FlatList, StyleSheet, Pressable, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  Pressable,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import { MainStackParamList } from "../types/navigation";
 import { getAuth, signOut } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -19,6 +26,7 @@ import Loading from "../screens/utils/Loading";
 
 import { gql, useQuery, useMutation } from "@apollo/client";
 import { testObj } from "../decl/functions.decl";
+import useLocation from "../hooks/useLocation";
 
 const POSTS_QUERY = gql`
   query Posts {
@@ -46,8 +54,9 @@ export default function ({
   const { isDarkmode, setTheme } = useTheme();
   const PostQuery = useQuery(POSTS_QUERY);
   const [posts, setPosts] = useState(testObj(PostQuery.data, "getPosts"));
+  const { getLocation, errorMsg } = useLocation();
 
-  // console.log("posts : ", data);
+  // console.log("loca : ", getLocation);
   // console.log("isLoading : ", loading);
   // console.log("error : ", error);
 
@@ -78,6 +87,14 @@ export default function ({
     ></CardPost>
   );
 
+  const handleAdd = () => {
+    console.log("dede", getLocation);
+
+    navigation.navigate("NewPost", {
+      location: testObj(getLocation, "coords"),
+    });
+  };
+
   const onPressFunction = () => {
     // navigation.navigate("NewPost", { userName: "Robin" });
     console.log("Add post");
@@ -103,13 +120,29 @@ export default function ({
         }}
       />
 
-      <TouchableOpacity onPress={() => {navigation.navigate('Onboarding')}}>
-        <View style={{justifyContent:"center", alignItems:'center', width: '100%', backgroundColor:'#FF4070', flexDirection:"row"}}>
-          <Image source={require('../../assets/images/icons/info.png')} style={{height:15, resizeMode:"contain"}}></Image>
-        <Text style={{padding: 5, fontSize:16, color:"#F7F7F7"}}>Embarquement</Text>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("Onboarding");
+        }}
+      >
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            backgroundColor: "#FF4070",
+            flexDirection: "row",
+          }}
+        >
+          <Image
+            source={require("../../assets/images/icons/info.png")}
+            style={{ height: 15, resizeMode: "contain" }}
+          ></Image>
+          <Text style={{ padding: 5, fontSize: 16, color: "#F7F7F7" }}>
+            Embarquement
+          </Text>
         </View>
       </TouchableOpacity>
-    
 
       <View
         style={{
@@ -126,19 +159,24 @@ export default function ({
             keyExtractor={(posts): any => posts.id}
           />
         )}
-        </View>
-        
-          <TouchableOpacity style={styles.addToMapButton}>
-          <View style={styles.addToMapButtonImageBackground}></View>
-          <Image
-            style={styles.addToMapButtonImage}
-            source={require("../../assets/images/add-to-map.png")}
-          ></Image>
-        </TouchableOpacity>
-          {/* <View>
+      </View>
+      <TouchableOpacity style={styles.addToMapButton} onPress={handleAdd}>
+        <View style={styles.addToMapButtonImageBackground}></View>
+        <Image
+          style={styles.addToMapButtonImage}
+          source={require("../../assets/images/add-to-map.png")}
+        ></Image>
+      </TouchableOpacity>
+      {/* <TouchableOpacity style={styles.addToMapButton}>
+        <View style={styles.addToMapButtonImageBackground}></View>
+        <Image
+          style={styles.addToMapButtonImage}
+          source={require("../../assets/images/add-to-map.png")}
+        ></Image>
+      </TouchableOpacity> */}
+      {/* <View>
             <Image source={require("../../assets/images/icons/plus.png")}></Image>
           </View> */}
-      
     </Layout>
   );
 }
@@ -182,7 +220,6 @@ const styles = StyleSheet.create({
     backgroundColor: themeColor.dark,
   },
 
-  
   addToMapButton: {
     position: "absolute",
     width: 60,
@@ -204,5 +241,17 @@ const styles = StyleSheet.create({
     width: 35,
     height: 35,
     backgroundColor: "#FFFFFF",
+  },
+  locateMapButton: {
+    position: "absolute",
+    width: 60,
+    height: 60,
+    bottom: 95,
+    right: 50,
+  },
+  locateMapImage: {
+    width: 60,
+    height: 60,
+    resizeMode: "contain",
   },
 });

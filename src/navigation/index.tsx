@@ -23,11 +23,11 @@ const USER_QUERY = gql`
 export default () => {
   const { data, loading, error } = useQuery(USER_QUERY);
   const auth = useContext(AuthContext);
-  const user = auth.user;
+  const isLogged = auth.isLogged;
 
   useEffect(() => {
-    // console.log("user", user);
-  }, [user]);
+    // console.log("isLogged", isLogged);
+  }, [isLogged]);
 
   return (
     // <NavigationContainer>
@@ -36,9 +36,9 @@ export default () => {
     //   {data && <Main />}
     // </NavigationContainer>
     <NavigationContainer>
-      {user == null && <Loading />}
-      {user == false && <Auth />}
-      {user == true && <Main />}
+      {isLogged == null && <Loading />}
+      {isLogged == false && <Auth />}
+      {isLogged == true && <Main />}
     </NavigationContainer>
   );
 };

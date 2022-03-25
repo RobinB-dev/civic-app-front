@@ -18,6 +18,7 @@ import { Camera } from "expo-camera";
 
 import USERS from "../provider/users.json";
 import { StatusBar } from "expo-status-bar";
+import useLocation from "../hooks/useLocation";
 
 // const findUser = (_userName: string) => {
 //   return USERS.find((o: { username: string }) => o.username === _userName);
@@ -28,6 +29,11 @@ export default function ({
   route,
 }: NativeStackScreenProps<MainStackParamList, "NewPost">) {
   const { isDarkmode, setTheme } = useTheme();
+  const { getLocation, errorMsg } = useLocation();
+
+  console.log("nav: ", route.params?.location);
+  // console.log("getLoc: ", testObj(getLocation, "coords"));
+
   // const [userName, setUserName] = useState("roger");
   // const [userObj, setUserObj] = useState({});
   // useFocusEffect(

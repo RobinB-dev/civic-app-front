@@ -2,7 +2,9 @@ import React, { createContext, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type ContextProps = {
-  user: null | boolean;
+  isLogged: null | boolean;
+  setIsLogged?: any;
+  user: object;
   setUser?: any;
   token: any;
   setToken?: any;
@@ -40,9 +42,10 @@ const getData = async (key: string) => {
 
 const AuthProvider = (props: Props) => {
   // const auth = getAuth();
-  // user null = loading
-  const [user, setUser] = useState<null | boolean>(false);
+  // isLogged null = loading
+  const [isLogged, setIsLogged] = useState<null | boolean>(false);
   const [token, setToken] = useState<any>(null);
+  const [user, setUser] = useState({});
   const [uid, setUid] = useState<string>("Q7RWSRTMA4RkYjqf60kkPEhLDrG3");
 
   // test1@fm.com
@@ -53,8 +56,12 @@ const AuthProvider = (props: Props) => {
   }, [token]);
 
   useEffect(() => {
-    console.log(uid, "uissss");
+    // console.log(uid, "uissss");
   }, [uid]);
+
+  useEffect(() => {
+    console.log("user", user);
+  }, [user]);
 
   useEffect(() => {
     checkToken();
@@ -63,14 +70,12 @@ const AuthProvider = (props: Props) => {
   function checkToken() {
     getData("@token").then((value) => {
       if (value) {
-        console.log("already set", uid);
-        setToken(value);
-
+        // console.log("already set", uid);
+        // setToken(value);
         // console.log(value);
-
         // setToken(JSON.parse(JSON.stringify(value)));
       } else {
-        console.log("no set");
+        // console.log("no set");
       }
     });
   }
@@ -80,24 +85,26 @@ const AuthProvider = (props: Props) => {
       storeData("@token", true);
       // console.log(" token", token);
 
-      setUser(true);
+      setIsLogged(true);
     } else {
       // storeData("@token", token);
       // console.log("no token", false);
       // getData("@token");
-      setUser(false);
+      setIsLogged(false);
     }
   }
 
   return (
     <AuthContext.Provider
       value={{
-        user,
-        setUser,
+        isLogged,
+        setIsLogged,
         token,
         setToken,
         uid,
         setUid,
+        user,
+        setUser,
       }}
     >
       {props.children}
