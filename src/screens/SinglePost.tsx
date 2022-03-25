@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { View, Image, StyleSheet, TouchableOpacity, FlatList, ScrollView, SafeAreaView } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Pressable,
+  ScrollView,
+} from "react-native";
 import { MainStackParamList } from "../types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {
@@ -34,7 +41,7 @@ export default function ({
 
   return (
     <Layout>
-      <TopNav 
+      <TopNav
         middleContent={title}
         leftContent={
           <Ionicons
@@ -58,69 +65,135 @@ export default function ({
             setTheme("dark");
           }
         }}
-        
       />
-      <View style={{height:"2.5%"}}></View>
+      <View style={{ height: "2.5%" }}></View>
       <View style={styles.pageContainer}>
-      <ScrollView contentContainerStyle={{height:"100%"}} style={styles.postContainer}>
-      <View style={styles.usernameCont}>
+        <ScrollView style={{ width: "85%", flex: 1 }}>
+          <Pressable
+            style={styles.usernameCont}
+            onPress={() => {
+              /* 1. Navigate to the Details route with params */
+              navigation.navigate("UserProfile", { uid: uid });
+            }}
+          >
+            <Image
+              resizeMode="contain"
+              style={{
+                height: 20,
+                width: 20,
+              }}
+              source={require("../../assets/images/userpic.png")}
+            ></Image>
+            <Text style={styles.username}>Jackie Chan</Text>
+          </Pressable>
           <Image
-            style={styles.iconCat}
-            source={require("../../assets/images/userpic.png")}
-          ></Image>
-          <Text style={styles.username}>Jackie Chan</Text>
-      </View>
-      <Image
-          resizeMode="contain"
+            resizeMode="contain"
             style={styles.image}
             source={{
               uri: image,
-          }}
-        />
-      <View
-              style={styles.categoryCont
-              }
-            >
-          <Image
-            source={require("../../assets/images/categoryIconList.png")}
-            style={styles.iconCat}
-          ></Image>
-          <Text style={{ fontSize: 10, color: "#191919", marginRight:5 }}>{tag}</Text>
-      </View>
-      <View>
-        <Text style={styles.title}>{title}</Text>
-        {/* <Text>id :{id}</Text> */}
-        
-        <Text style={styles.content}>Faites votre trajet du quotidien ou baladez vous dans votre quartier pour pouvoir marquer les points qui pourront aider vos concitoyens ! C'est tout simple : prenez une photo d'un problème, d'une point d’intérêt ou encore d’un événement et postez la !{content}</Text>
-        <Text style={styles.subtitle}>J'ai constaté ce problème</Text>
-        </View>
-        
-      <View style={styles.xpHeader}>
-           <View style={styles.xpBar}>
-             <Image
-               style={styles.xpBarBase}
-               source={require("../../assets/images/xp-bar.png")}
-             ></Image>
-             <View
-               style={[styles.xpBarOverlay]}
-             >
-               <View style={styles.xpBarOverlayShine}></View>
-             </View>
-             </View>
-           </View>
-           <Text style={styles.content}>Faites votre trajet du quotidien ou baladez vous dans votre quartier pour pouvoir marquer les points qui pourront aider vos concitoyens ! C'est tout simple : prenez une photo d'un problème, d'une point d’intérêt ou encore d’un événement et postez la !{content}</Text>
-           <Text style={styles.content}>Faites votre trajet du quotidien ou baladez vous dans votre quartier pour pouvoir marquer les points qui pourront aider vos concitoyens ! C'est tout simple : prenez une photo d'un problème, d'une point d’intérêt ou encore d’un événement et postez la !{content}</Text>
-           <Text style={styles.content}>Faites votre trajet du quotidien ou baladez vous dans votre quartier pour pouvoir marquer les points qui pourront aider vos concitoyens ! C'est tout simple : prenez une photo d'un problème, d'une point d’intérêt ou encore d’un événement et postez la !{content}</Text>
-           <Text style={styles.content}>Faites votre trajet du quotidien ou baladez vous dans votre quartier pour pouvoir marquer les points qui pourront aider vos concitoyens ! C'est tout simple : prenez une photo d'un problème, d'une point d’intérêt ou encore d’un événement et postez la !{content}</Text>
-           <Text style={styles.content}>Faites votre trajet du quotidien ou baladez vous dans votre quartier pour pouvoir marquer les points qui pourront aider vos concitoyens ! C'est tout simple : prenez une photo d'un problème, d'une point d’intérêt ou encore d’un événement et postez la !{content}</Text>
-           <Text style={styles.content}>Faites votre trajet du quotidien ou baladez vous dans votre quartier pour pouvoir marquer les points qui pourront aider vos concitoyens ! C'est tout simple : prenez une photo d'un problème, d'une point d’intérêt ou encore d’un événement et postez la !{content}</Text>
-           <Text style={styles.content}>Faites votre trajet du quotidien ou baladez vous dans votre quartier pour pouvoir marquer les points qui pourront aider vos concitoyens ! C'est tout simple : prenez une photo d'un problème, d'une point d’intérêt ou encore d’un événement et postez la !{content}</Text>
-           <Text style={styles.content}>Faites votre trajet du quotidien ou baladez vous dans votre quartier pour pouvoir marquer les points qui pourront aider vos concitoyens ! C'est tout simple : prenez une photo d'un problème, d'une point d’intérêt ou encore d’un événement et postez la !{content}</Text>
-           <Text style={styles.content}>Faites votre trajet du quotidien ou baladez vous dans votre quartier pour pouvoir marquer les points qui pourront aider vos concitoyens ! C'est tout simple : prenez une photo d'un problème, d'une point d’intérêt ou encore d’un événement et postez la !{content}</Text>
-           <Text style={styles.content}>Faites votre trajet du quotidien ou baladez vous dans votre quartier pour pouvoir marquer les points qui pourront aider vos concitoyens ! C'est tout simple : prenez une photo d'un problème, d'une point d’intérêt ou encore d’un événement et postez la !{content}</Text>
-           <Text style={styles.content}>Faites votre trajet du quotidien ou baladez vous dans votre quartier pour pouvoir marquer les points qui pourront aider vos concitoyens ! C'est tout simple : prenez une photo d'un problème, d'une point d’intérêt ou encore d’un événement et postez la !{content}</Text>
+            }}
+          />
+          <View style={styles.categoryCont}>
+            <Image
+              source={require("../../assets/images/categoryIconList.png")}
+              style={styles.iconCat}
+            ></Image>
+            <Text style={{ fontSize: 10, color: "#191919", marginRight: 5 }}>
+              {tag}
+            </Text>
+          </View>
+          <View>
+            <Text style={styles.title}>{title}</Text>
+            {/* <Text>id :{id}</Text> */}
 
-      </ScrollView>
+            <Text style={styles.content}>
+              Faites votre trajet du quotidien ou baladez vous dans votre
+              quartier pour pouvoir marquer les points qui pourront aider vos
+              concitoyens ! C'est tout simple : prenez une photo d'un problème,
+              d'une point d’intérêt ou encore d’un événement et postez la !
+              {content}
+            </Text>
+            <Text style={styles.subtitle}>J'ai constaté ce problème</Text>
+          </View>
+
+          <View style={styles.xpHeader}>
+            <View style={styles.xpBar}>
+              <Image
+                style={styles.xpBarBase}
+                source={require("../../assets/images/xp-bar.png")}
+              ></Image>
+              <View style={[styles.xpBarOverlay]}>
+                <View style={styles.xpBarOverlayShine}></View>
+              </View>
+            </View>
+          </View>
+          <Text style={styles.content}>
+            Faites votre trajet du quotidien ou baladez vous dans votre quartier
+            pour pouvoir marquer les points qui pourront aider vos concitoyens !
+            C'est tout simple : prenez une photo d'un problème, d'une point
+            d’intérêt ou encore d’un événement et postez la !{content}
+          </Text>
+          <Text style={styles.content}>
+            Faites votre trajet du quotidien ou baladez vous dans votre quartier
+            pour pouvoir marquer les points qui pourront aider vos concitoyens !
+            C'est tout simple : prenez une photo d'un problème, d'une point
+            d’intérêt ou encore d’un événement et postez la !{content}
+          </Text>
+          <Text style={styles.content}>
+            Faites votre trajet du quotidien ou baladez vous dans votre quartier
+            pour pouvoir marquer les points qui pourront aider vos concitoyens !
+            C'est tout simple : prenez une photo d'un problème, d'une point
+            d’intérêt ou encore d’un événement et postez la !{content}
+          </Text>
+          <Text style={styles.content}>
+            Faites votre trajet du quotidien ou baladez vous dans votre quartier
+            pour pouvoir marquer les points qui pourront aider vos concitoyens !
+            C'est tout simple : prenez une photo d'un problème, d'une point
+            d’intérêt ou encore d’un événement et postez la !{content}
+          </Text>
+          <Text style={styles.content}>
+            Faites votre trajet du quotidien ou baladez vous dans votre quartier
+            pour pouvoir marquer les points qui pourront aider vos concitoyens !
+            C'est tout simple : prenez une photo d'un problème, d'une point
+            d’intérêt ou encore d’un événement et postez la !{content}
+          </Text>
+          <Text style={styles.content}>
+            Faites votre trajet du quotidien ou baladez vous dans votre quartier
+            pour pouvoir marquer les points qui pourront aider vos concitoyens !
+            C'est tout simple : prenez une photo d'un problème, d'une point
+            d’intérêt ou encore d’un événement et postez la !{content}
+          </Text>
+          <Text style={styles.content}>
+            Faites votre trajet du quotidien ou baladez vous dans votre quartier
+            pour pouvoir marquer les points qui pourront aider vos concitoyens !
+            C'est tout simple : prenez une photo d'un problème, d'une point
+            d’intérêt ou encore d’un événement et postez la !{content}
+          </Text>
+          <Text style={styles.content}>
+            Faites votre trajet du quotidien ou baladez vous dans votre quartier
+            pour pouvoir marquer les points qui pourront aider vos concitoyens !
+            C'est tout simple : prenez une photo d'un problème, d'une point
+            d’intérêt ou encore d’un événement et postez la !{content}
+          </Text>
+          <Text style={styles.content}>
+            Faites votre trajet du quotidien ou baladez vous dans votre quartier
+            pour pouvoir marquer les points qui pourront aider vos concitoyens !
+            C'est tout simple : prenez une photo d'un problème, d'une point
+            d’intérêt ou encore d’un événement et postez la !{content}
+          </Text>
+          <Text style={styles.content}>
+            Faites votre trajet du quotidien ou baladez vous dans votre quartier
+            pour pouvoir marquer les points qui pourront aider vos concitoyens !
+            C'est tout simple : prenez une photo d'un problème, d'une point
+            d’intérêt ou encore d’un événement et postez la !{content}
+          </Text>
+          <Text style={styles.content}>
+            Faites votre trajet du quotidien ou baladez vous dans votre quartier
+            pour pouvoir marquer les points qui pourront aider vos concitoyens !
+            C'est tout simple : prenez une photo d'un problème, d'une point
+            d’intérêt ou encore d’un événement et postez la !{content}
+          </Text>
+        </ScrollView>
       </View>
     </Layout>
   );
@@ -135,8 +208,8 @@ const styles = StyleSheet.create({
   //   // backgroundColor: "#F7F7F7",
   // },
 
-  pageContainer : {
-    width : "100%",
+  pageContainer: {
+    width: "100%",
     // height:"100%",
     // display:"flex",
     // alignSelf:"center",
@@ -145,19 +218,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // overflow:"scroll",
     // backgroundColor : "#F7F7F7",
-    
+
     // padding :
   },
 
-  postContainer : {
-    width:"80%",
+  postContainer: {
+    width: "80%",
     // display:"flex",
     flex: 1,
     // justifyContent:'center',
     // alignItems:'center',
     // backgroundColor : "#F7F7F7",
     // height:"100%"
-    
   },
 
   header: {
@@ -192,19 +264,19 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#2C60C6",
   },
-  
+
   content: {
     fontSize: 14,
     // flex: 1,
     // flexShrink:1,
     color: "#838383",
-    marginBottom:25,
+    marginBottom: 25,
   },
 
   username: {
     color: "#FF4070",
     fontSize: 16,
-    marginVertical:10,
+    marginVertical: 10,
   },
 
   usernameCont: {
@@ -215,34 +287,31 @@ const styles = StyleSheet.create({
     // flex: 1,
   },
 
-  image :{
-    marginVertical:10,
+  image: {
+    marginVertical: 10,
     height: "30%",
     resizeMode: "cover",
     // flex:1,
-    width: '100%',
-  
-
+    width: "100%",
   },
-  
+
   iconCat: {
     marginRight: "5%",
     // margin: "2.5%"
   },
 
-  categoryCont:{
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
-  backgroundColor: "#FCF4ED",
-  borderRadius: 20,
-  padding: 3,
-  borderWidth: 1,
-  borderColor: "#DADADA",
-  alignSelf: 'flex-start',
-  marginVertical:10,
+  categoryCont: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FCF4ED",
+    borderRadius: 20,
+    padding: 3,
+    borderWidth: 1,
+    borderColor: "#DADADA",
+    alignSelf: "flex-start",
+    marginVertical: 10,
   },
-
 
   xpHeader: {
     // position: "absolute",

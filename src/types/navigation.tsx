@@ -5,6 +5,7 @@ export type MainStackParamList = {
   NewPostComplete: any;
   NewPostPublished: any;
   SinglePost: any;
+  UserProfile: any;
 };
 
 export type AuthStackParamList = {
