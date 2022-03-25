@@ -29,10 +29,11 @@ const GET_EMAIL = gql`
 `;
 
 const ADD_EMAIL = gql`
-  mutation ($email: String!, $password: String!) {
-    register(email: $email, password: $password) {
+  mutation ($email: String!, $password: String!, $username: String!) {
+    register(email: $email, password: $password, username: $username) {
       token
       error
+      uid
     }
   }
 `;
@@ -43,6 +44,7 @@ export default function ({
   const { isDarkmode, setTheme } = useTheme();
   const [email, setEmail] = useState<string>("test1@fm.com");
   const [password, setPassword] = useState<string>("azerty123");
+  const [username, setUsername] = useState<string>("default");
   const auth = useContext(AuthContext);
   const [addEmail, { data, loading, error }] = useMutation(ADD_EMAIL);
   const [authError, setAuthError] = useState<string | null>(null);
@@ -55,13 +57,16 @@ export default function ({
   // }, [loading]);
   useEffect(() => {
     if (data) {
+      console.log(data);
       const user = testObj(data, "register");
       const token = testObj(user, "token");
       const error = testObj(user, "error");
+      const uid = testObj(user, "uid");
       if (error) {
         setAuthError(error);
       }
       auth.setToken(token);
+      auth.setUid(uid);
     }
   }, [data]);
 
@@ -73,6 +78,7 @@ export default function ({
       variables: {
         email: email,
         password: password,
+        username: username,
       },
     });
   }
@@ -106,7 +112,7 @@ export default function ({
               flex: 3,
               paddingHorizontal: 20,
               paddingBottom: 20,
-              backgroundColor: isDarkmode ? themeColor.dark : themeColor.white,
+              backgroundColor: isDarkmode ? themeColor.dark : "#F7F7F7",
             }}
           >
             <Text
@@ -119,7 +125,18 @@ export default function ({
             >
               Register
             </Text>
-            <Text>Email</Text>
+            <TextInput
+              containerStyle={{ marginTop: 15 }}
+              placeholder="Nom d'utilisateur"
+              value={username}
+              autoCapitalize="none"
+              autoCompleteType="off"
+              autoCorrect={false}
+              keyboardType="default"
+              onChangeText={(text) => setUsername(text)}
+            />
+
+            {/* <Text>Email</Text> */}
             <TextInput
               containerStyle={{ marginTop: 15 }}
               placeholder="Enter your email"
@@ -131,7 +148,7 @@ export default function ({
               onChangeText={(text) => setEmail(text)}
             />
 
-            <Text style={{ marginTop: 15 }}>Password</Text>
+            {/* <Text style={{ marginTop: 15 }}>Password</Text> */}
             <TextInput
               containerStyle={{ marginTop: 15 }}
               placeholder="Enter your password"
@@ -162,7 +179,7 @@ export default function ({
                 justifyContent: "center",
               }}
             >
-              <Text size="md">Already have an account?</Text>
+              <Text size="md">Déjà membre ?</Text>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("Login");
@@ -173,9 +190,10 @@ export default function ({
                   fontWeight="bold"
                   style={{
                     marginLeft: 5,
+                    color: "#2C60C6",
                   }}
                 >
-                  Login here
+                  Se connecter
                 </Text>
               </TouchableOpacity>
             </View>
@@ -197,6 +215,7 @@ export default function ({
                   fontWeight="bold"
                   style={{
                     marginLeft: 5,
+                    color: "#2C60C6",
                   }}
                 >
                   {isDarkmode ? "☀️ light theme" : "🌑 dark theme"}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { MainStackParamList } from "../types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {
@@ -14,108 +14,183 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { testObj } from "../decl/functions.decl";
 import { useFocusEffect } from "@react-navigation/native";
+import { Camera } from "expo-camera";
 
 import USERS from "../provider/users.json";
+import { StatusBar } from "expo-status-bar";
+import useLocation from "../hooks/useLocation";
 
-const findUser = (_userName: string) => {
-  return USERS.find((o: { username: string }) => o.username === _userName);
-};
+// const findUser = (_userName: string) => {
+//   return USERS.find((o: { username: string }) => o.username === _userName);
+// };
 
 export default function ({
   navigation,
   route,
 }: NativeStackScreenProps<MainStackParamList, "NewPost">) {
   const { isDarkmode, setTheme } = useTheme();
-  const [userName, setUserName] = useState("roger");
-  const [userObj, setUserObj] = useState({});
+  const { getLocation, errorMsg } = useLocation();
 
-  useFocusEffect(
-    useCallback(() => {
-      // Do something when the screen is focused
-      if (route.params) {
-        setUserName(testObj(route.params, "userName")[0]);
-        setUserObj(findUser(testObj(route.params, "userName")[0])!);
-      }
+  console.log("nav: ", route.params?.location);
+  // console.log("getLoc: ", testObj(getLocation, "coords"));
 
-      return () => {
-        // Do something when the screen is unfocused
-        // Useful for cleanup functions
-      };
-    }, [])
-  );
+  // const [userName, setUserName] = useState("roger");
+  // const [userObj, setUserObj] = useState({});
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     if (route.params) {
+  //       setUserName(testObj(route.params, "userName")[0]);
+  //       setUserObj(findUser(testObj(route.params, "userName")[0])!);
+  //     }
+  //     return () => {};
+  //   }, [])
+  // );
+  // if (userObj) { console.log(userObj, testObj(userObj, "picture")); }
 
-  if (userObj) {
-    console.log(userObj, testObj(userObj, "picture"));
+  const [post, setPost] = useState([
+    {
+      id: "",
+      title: "",
+      content: "",
+      image: "",
+      type: "",
+      lat: "",
+      long: "",
+    },
+  ]);
+
+  const [hasPermission, setHasPermission] = useState(null);
+  const [camera, setCamera] = useState<any>(null);
+  const [image, setImage] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+
+  useEffect(() => {
+    (async () => {
+      const cameraStatus = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(null);
+    })();
+  }, []);
+
+  const __takePicture = async () => {
+    if (!camera) return;
+    const photo = await camera.takePictureAsync();
+    console.log(photo);
+    if (photo.uri) {
+      navigation.navigate("NewPostComplete", {
+        location: route.params?.location,
+        photo: photo.uri,
+      });
+    }
+  };
+
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
   }
 
   return (
-    <Layout>
-      <TopNav
-        middleContent="Second Screen"
-        leftContent={
-          <Ionicons
-            name="chevron-back"
-            size={20}
-            color={isDarkmode ? themeColor.white100 : themeColor.dark}
-          />
-        }
-        leftAction={() => navigation.goBack()}
-        rightContent={
-          <Ionicons
-            name={isDarkmode ? "sunny" : "moon"}
-            size={20}
-            color={isDarkmode ? themeColor.white100 : themeColor.dark}
-          />
-        }
-        rightAction={() => {
-          if (isDarkmode) {
-            setTheme("light");
-          } else {
-            setTheme("dark");
-          }
-        }}
-      />
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Section>
-          <SectionContent>
-            {/* This text using ubuntu font */}
-            <Text style={styles.username}>Add a post</Text>
-            {userObj && (
-              <Image
-                style={styles.picture}
-                source={{
-                  uri: testObj(userObj, "picture"),
-                }}
-              />
-            )}
-          </SectionContent>
-          <SectionContent>
-            <Text style={styles.description}>
-              {testObj(userObj, "description")}
-            </Text>
-          </SectionContent>
-        </Section>
+    <View style={styles.fullScreen}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Photo</Text>
       </View>
-    </Layout>
+      <View style={styles.cameraContainer}>
+        <Camera
+          ref={(ref) => setCamera(ref)}
+          style={{ width: "100%", height: "100%" }}
+          type={type}
+        />
+
+        <TouchableOpacity
+          style={styles.cameraFlipButton}
+          onPress={() => {
+            setType(
+              type === Camera.Constants.Type.back
+                ? Camera.Constants.Type.front
+                : Camera.Constants.Type.back
+            );
+          }}
+        >
+          <Image
+            style={styles.cameraFlipButtonImage}
+            source={require("../../assets/images/camera-flip.png")}
+          ></Image>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.cameraShotButton}
+          onPress={__takePicture}
+        >
+          <View style={styles.cameraShotButtonCenter}></View>
+        </TouchableOpacity>
+      </View>
+      {image && <Image source={{ uri: image }} style={{ flex: 1 }} />}
+      <StatusBar style="dark" />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  username: {
-    fontSize: 30,
+  fullScreen: {
+    flex: 1,
+    alignItems: "center",
+    // justifyContent: "center",
+    backgroundColor: "#F7F7F7",
   },
-  picture: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+
+  header: {
+    width: "100%",
+    marginTop: "10%",
+    height: "10%",
+    // backgroundColor: '#FF9900',
+    justifyContent: "center",
+    alignItems: "center",
   },
-  description: {
-    fontSize: 20,
+
+  headerTitle: {
+    fontSize: 28,
+    color: "#B4B4B4",
+  },
+
+  cameraContainer: {
+    width: "90%",
+    borderRadius: 10,
+    height: "75%",
+    backgroundColor: "#191919",
+    alignItems: "center",
+    overflow: "hidden",
+  },
+
+  cameraFlipButton: {
+    position: "absolute",
+    width: 50,
+    height: 50,
+    left: 40,
+    top: 40,
+    borderRadius: 20,
+    backgroundColor: "#2C60C6",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  cameraFlipButtonImage: {
+    width: 20,
+    resizeMode: "contain",
+  },
+
+  cameraShotButton: {
+    position: "absolute",
+    width: 90,
+    height: 90,
+    bottom: 50,
+    borderRadius: 100,
+    backgroundColor: "#F7F7F740",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  cameraShotButtonCenter: {
+    width: 50,
+    height: 50,
+    backgroundColor: "#F7F7F7",
+    borderRadius: 100,
   },
 });

@@ -8,7 +8,6 @@ import {
   useTheme,
   themeColor,
 } from "react-native-rapi-ui";
-import { AntDesign } from "@expo/vector-icons";
 
 export type RootStackParamList = {
   HomeScreen: undefined;
@@ -19,68 +18,105 @@ export type RootStackParamList = {
 };
 
 // const Item = ({ title, content, user, navigation }: any) => (
-export const CardPost = ({ title, content }: any) => {
+export const CardPost = ({
+  title,
+  content,
+  navigation,
+  id,
+  uid,
+  tag,
+  image,
+}: any) => {
   const { isDarkmode, setTheme } = useTheme();
 
-  const onPressFunction = () => {
-    // navigation.navigate("NewPost", { userName: "Robin" });
-    console.log("Add post");
-  };
-
   return (
-    <Layout>
-      <View style={styles.item}>
-        {/* <Pressable
+    <View style={{marginLeft: 30, marginRight :30,}} >
+    <Pressable
+      style={styles.postContainer}
       onPress={() => {
-        {
-          navigation.navigate("SecondScreen", { userName: [user.username] });
-        }
+        /* 1. Navigate to the Details route with params */
+        navigation.navigate("SinglePost", {
+          id: id,
+          tag: tag,
+          uid: uid,
+          content: content,
+          title: title,
+          image: image,
+        });
       }}
     >
       <Image
-        style={styles.userImg}
-        source={{
-          uri: user.picture,
-        }}
-      ></Image>
-      <Text style={styles.content}>{user.username}</Text>
-    </Pressable> */}
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.content}>{content}</Text>
-        <Text style={styles.content}>{"Roibjdfjkshqbfgnsdhlkfwbvfrjegf"}</Text>
-        <Section>
-          <View style={styles.buttonContainer}>
-            <Pressable
-              onPress={onPressFunction}
-              style={[styles.button, isDarkmode ? styles.dark : styles.white]}
-            >
-              <AntDesign name="like1" size={24} color="black" />
-            </Pressable>
-            <Pressable
-              onPress={onPressFunction}
-              style={[styles.button, isDarkmode ? styles.dark : styles.white]}
-            >
-              <AntDesign name="dislike1" size={24} color="black" />
-            </Pressable>
-          </View>
-        </Section>
+        // source={image}
+        source={require("../../assets/images/Post1.png")}
+        fadeDuration={0}
+        style={styles.image}
+      />
+      <View style={styles.titleCont}>
+        <View style={styles.usernameCont}>
+          <Image
+            style={styles.iconCat}
+            source={require("../../assets/images/userpic.png")}
+          ></Image>
+          <Text style={styles.username}>{uid}</Text>
+        </View>
+
+        <View style={styles.textCont}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.content}>{content}</Text>
+        </View>
+        <View style={styles.btnCont}>
+        <View
+          style={styles.categoryCont
+          }
+        >
+          <Image
+            source={require("../../assets/images/categoryIconList.png")}
+            style={styles.iconCat}
+          ></Image>
+          <Text style={{ fontSize: 10, color: "#191919" }}>{tag}</Text>
+        </View>
+        
+        <View
+          style={styles.btn        
+          }
+        >
+          <Image
+            source={require("../../assets/images/icons/eyesmall.png")}
+            style={{width:20, height:20,}}
+          ></Image>
+          <Pressable>
+          <Text style={{ fontSize: 10, color: "#F7F7F7" }}>Voir</Text>
+          </Pressable>
+        </View>
       </View>
-    </Layout>
+      </View>
+      <View style={styles.separator}></View>
+    </Pressable>
+
+     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  item: {
-    backgroundColor: "#cbcbcb23",
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
+  // item: {
+  //   backgroundColor: "#cbcbcb23",
+  //   padding: 20,
+  //   marginVertical: 8,
+  //   marginHorizontal: 16,
+  // },
   title: {
-    fontSize: 20,
+    // fontWeight: 600,
+    fontSize: 18,
+    flexShrink: 1 ,
+    // width: "60%",
+    color: "#DADADA",
+    margin: 0,
+    padding: 0,
   },
   content: {
-    fontSize: 16,
+    fontSize: 10,
+    flex: 1,
+    flexShrink:1,
   },
   white: {
     backgroundColor: themeColor.white100,
@@ -88,19 +124,91 @@ const styles = StyleSheet.create({
   dark: {
     backgroundColor: themeColor.dark,
   },
-  button: {
-    // flex: 2,
+  postContainer: {
     display: "flex",
-    padding: 10,
-    borderRadius: 4,
-    margin: 5,
-    backgroundColor: "oldlace",
-    alignSelf: "flex-start",
-    width: 20,
-    textAlign: "center",
-  },
-  buttonContainer: {
+    marginVertical: "10%",
     flexDirection: "row",
+    width: "100%",
     flexWrap: "wrap",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+  },
+  image: {
+    width: "40%",
+    height: "100%",
+    resizeMode: "cover",
+    marginRight: "8%",
+    borderRadius: 8,
+  },
+  titleCont: {
+    // marginTop:"5%",
+    // marginRight:"2.5%",
+    display: "flex",
+    // flexDirection:"row",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    flex:1,
+  },
+
+  categoryCont:{
+    display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: "#FCF4ED",
+            borderRadius: 20,
+            padding: 3,
+            borderWidth: 1,
+            borderColor: "#DADADA",
+            marginRight: "5%",
+
+  },
+
+  btn:{
+    display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: "#FF4070",
+            borderRadius: 20,
+            padding: 3,
+            paddingRight:"6%",
+            borderWidth: 1,
+            borderColor: "#DADADA",
+  },
+
+  btnCont: {
+    flexDirection:"row",
+    justifyContent: "space-between",
+  },
+
+  username: {
+    color: "#FF4070",
+    fontSize: 12,
+    flexShrink:1,
+  },
+
+  usernameCont: {
+    // width:30,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+  },
+
+  
+  iconCat: {
+    marginRight: "5%",
+    // margin: "2.5%"
+  },
+  
+  textCont: {
+    justifyContent: "center",
+    // alignItems : "center",
+    flex: 1,
+  },
+  separator: {
+    width: "100%",
+    height: 1,
+    backgroundColor: "#DADADA",
+    marginTop: 30,
   },
 });

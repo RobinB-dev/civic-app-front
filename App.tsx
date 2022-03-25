@@ -9,7 +9,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 // Initialize Apollo Client
 const client = new ApolloClient({
-  uri: "http://localhost:4000/",
+  uri: "https://h3-proxy.services.quickpipes.io/team8/",
   cache: new InMemoryCache(),
 });
 
@@ -22,7 +22,7 @@ export default function App() {
 
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider theme="dark" images={images}>
+      <ThemeProvider theme="light" images={images}>
         <AuthProvider>
           <Navigation />
         </AuthProvider>

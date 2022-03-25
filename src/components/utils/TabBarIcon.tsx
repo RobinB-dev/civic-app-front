@@ -1,21 +1,20 @@
 import React from "react";
-import { themeColor, useTheme } from "react-native-rapi-ui";
-import { Ionicons } from "@expo/vector-icons";
+import { themeColor, useTheme, Text } from "react-native-rapi-ui";
 
-export default ({ icon, focused }: { icon: any; focused: boolean }) => {
+type TabBarIcon = {
+  focusImage: any;
+  unFocusImage: any;
+  focused: boolean;
+};
+import { Image } from "react-native";
+export default ({ focusImage, unFocusImage, focused }: TabBarIcon) => {
   const { isDarkmode } = useTheme();
+
   return (
-    <Ionicons
-      name={icon}
-      style={{ marginBottom: -7 }}
-      size={24}
-      color={
-        focused
-          ? isDarkmode
-            ? themeColor.white100
-            : themeColor.primary
-          : "rgb(143, 155, 179)"
-      }
+    <Image
+      source={focused ? focusImage : unFocusImage}
+      resizeMode="contain"
+      style={{ height: 30, width: 30, margin: 5 }}
     />
   );
 };

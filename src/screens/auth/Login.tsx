@@ -26,6 +26,7 @@ const LOGIN_EMAIL = gql`
     login(email: $email, password: $password) {
       token
       error
+      uid
     }
   }
 `;
@@ -43,14 +44,17 @@ export default function ({
   // const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    // console.log(data, error);
     if (data) {
       const user = testObj(data, "login");
       const token = testObj(user, "token");
       const error = testObj(user, "error");
+      const uid = testObj(user, "uid");
       if (error) {
         setAuthError(error);
       }
       auth.setToken(token);
+      auth.setUid(uid);
     }
   }, [data, loading]);
 
@@ -109,10 +113,10 @@ export default function ({
             >
               Login
             </Text>
-            <Text>Email</Text>
+            {/* <Text>Email</Text> */}
             <TextInput
               containerStyle={{ marginTop: 15 }}
-              placeholder="Enter your email"
+              placeholder="Adresse email"
               value={email}
               autoCapitalize="none"
               autoCompleteType="off"
@@ -121,10 +125,10 @@ export default function ({
               onChangeText={(text) => setEmail(text)}
             />
 
-            <Text style={{ marginTop: 15 }}>Password</Text>
+            {/* <Text style={{ marginTop: 15 }}>Password</Text> */}
             <TextInput
               containerStyle={{ marginTop: 15 }}
-              placeholder="Enter your password"
+              placeholder="Mot de passe"
               value={password}
               autoCapitalize="none"
               autoCompleteType="off"
@@ -163,6 +167,7 @@ export default function ({
                   fontWeight="bold"
                   style={{
                     marginLeft: 5,
+                    color: "#2C60C6",
                   }}
                 >
                   Register here
@@ -182,8 +187,14 @@ export default function ({
                   navigation.navigate("ForgetPassword");
                 }}
               >
-                <Text size="md" fontWeight="bold">
-                  Forget password
+                <Text
+                  size="md"
+                  fontWeight="bold"
+                  style={{
+                    color: "#2C60C6",
+                  }}
+                >
+                  Mot de passe oublié ?
                 </Text>
               </TouchableOpacity>
             </View>
