@@ -43,7 +43,7 @@ const AuthProvider = (props: Props) => {
   // user null = loading
   const [user, setUser] = useState<null | boolean>(false);
   const [token, setToken] = useState<any>(null);
-  const [uid, setUid] = useState<string>("defaut");
+  const [uid, setUid] = useState<string>("Q7RWSRTMA4RkYjqf60kkPEhLDrG3");
 
   // test1@fm.com
   useEffect(() => {
@@ -63,7 +63,7 @@ const AuthProvider = (props: Props) => {
   function checkToken() {
     getData("@token").then((value) => {
       if (value) {
-        // console.log("already set", value);
+        console.log("already set", uid);
         setToken(value);
 
         // console.log(value);

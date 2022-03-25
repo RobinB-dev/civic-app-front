@@ -10,13 +10,27 @@ import {
   themeColor,
   SectionContent,
   Section,
+  Button,
 } from "react-native-rapi-ui";
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
 import { Camera } from "expo-camera";
 
 import { StatusBar } from "expo-status-bar";
+import { reload } from "firebase/auth";
+import { gql, useMutation } from "@apollo/client";
+import { testObj } from "../decl/functions.decl";
 
+const USER_QUERY = gql`
+  mutation ($uid: String) {
+    getUserData(uid: $uid) {
+      username
+      image
+      email
+      number
+    }
+  }
+`;
 // const findUser = (_userName: string) => {
 //   return USERS.find((o: { username: string }) => o.username === _userName);
 // };
@@ -27,8 +41,31 @@ export default function ({
 }: NativeStackScreenProps<MainStackParamList, "UserProfile">) {
   const { isDarkmode, setTheme } = useTheme();
   const { uid }: any = route.params;
+  const [userData, setUserData] = useState({});
+  const [dataUser, { data, loading, error }] = useMutation(USER_QUERY);
 
   //   console.log("vreo", route.params);
+
+  async function reload() {
+    // console.log("render", testObj(data, "username"), uid, data);
+
+    dataUser({
+      variables: {
+        uid: uid,
+      },
+    });
+  }
+
+  useEffect(() => {
+    // console.log("error : ", error);
+    // console.log("not data : ", data);
+    if (testObj(data, "getUserData") !== userData) {
+      // console.log("users : ", testObj(data, "getUserData"));
+      setUserData(testObj(data, "getUserData"));
+    } else {
+      // console.log("loading : ", loading);
+    }
+  }, [data]);
 
   return (
     <Layout>
@@ -66,6 +103,12 @@ export default function ({
       >
         <Section>
           <Text>uid :{uid}</Text>
+        </Section>
+        <Section>
+          <TouchableOpacity onPress={() => reload()}>
+            <Text>C'est parti on fetch !</Text>
+            <Text>Username : {testObj(userData, "username")}</Text>
+          </TouchableOpacity>
         </Section>
       </View>
     </Layout>
