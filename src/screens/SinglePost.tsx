@@ -17,6 +17,8 @@ import {
   themeColor,
   SectionContent,
   Section,
+  TextInput,
+  Button,
 } from "react-native-rapi-ui";
 import { Ionicons } from "@expo/vector-icons";
 import { testObj } from "../decl/functions.decl";
@@ -66,10 +68,13 @@ export default function ({
           }
         }}
       />
-      <View style={{ height: "2.5%" }}></View>
+      <View style={{ height: 20 }}></View>
       <View style={styles.pageContainer}>
-        <ScrollView style={{ width: "85%", flex: 1 }}>
+        
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.postContainer}>
+        
           <Pressable
+
             style={styles.usernameCont}
             onPress={() => {
               /* 1. Navigate to the Details route with params */
@@ -109,13 +114,20 @@ export default function ({
             <Text style={styles.content}>
               Faites votre trajet du quotidien ou baladez vous dans votre
               quartier pour pouvoir marquer les points qui pourront aider vos
-              concitoyens ! C'est tout simple : prenez une photo d'un problème,
-              d'une point d’intérêt ou encore d’un événement et postez la !
+              concitoyens ! C'est tout simpl es votre trajet du quotidien ou baladez vous dans votre
+              quartier pour pouvoir marquer les points qui pourront aider vos
+              concitoyens ! C'est tout simples votre trajet du quotidien ou baladez vous dans votre
+              quartier pour pouvoir marquer les points qui pourront aider vos
+              
               {content}
             </Text>
-            <Text style={styles.subtitle}>J'ai constaté ce problème</Text>
+            
           </View>
-
+            <Text style={styles.subtitle}>J'ai constaté ce problème</Text>
+            <Text style={styles.contentSmall}>20votes</Text>
+            <View style ={{flexDirection:"row", alignItems:"center"}}>
+          <Image source={require('../../assets/images/icons/dislike.png')}></Image>
+          
           <View style={styles.xpHeader}>
             <View style={styles.xpBar}>
               <Image
@@ -127,72 +139,165 @@ export default function ({
               </View>
             </View>
           </View>
-          <Text style={styles.content}>
-            Faites votre trajet du quotidien ou baladez vous dans votre quartier
-            pour pouvoir marquer les points qui pourront aider vos concitoyens !
-            C'est tout simple : prenez une photo d'un problème, d'une point
-            d’intérêt ou encore d’un événement et postez la !{content}
-          </Text>
-          <Text style={styles.content}>
-            Faites votre trajet du quotidien ou baladez vous dans votre quartier
-            pour pouvoir marquer les points qui pourront aider vos concitoyens !
-            C'est tout simple : prenez une photo d'un problème, d'une point
-            d’intérêt ou encore d’un événement et postez la !{content}
-          </Text>
-          <Text style={styles.content}>
-            Faites votre trajet du quotidien ou baladez vous dans votre quartier
-            pour pouvoir marquer les points qui pourront aider vos concitoyens !
-            C'est tout simple : prenez une photo d'un problème, d'une point
-            d’intérêt ou encore d’un événement et postez la !{content}
-          </Text>
-          <Text style={styles.content}>
-            Faites votre trajet du quotidien ou baladez vous dans votre quartier
-            pour pouvoir marquer les points qui pourront aider vos concitoyens !
-            C'est tout simple : prenez une photo d'un problème, d'une point
-            d’intérêt ou encore d’un événement et postez la !{content}
-          </Text>
-          <Text style={styles.content}>
-            Faites votre trajet du quotidien ou baladez vous dans votre quartier
-            pour pouvoir marquer les points qui pourront aider vos concitoyens !
-            C'est tout simple : prenez une photo d'un problème, d'une point
-            d’intérêt ou encore d’un événement et postez la !{content}
-          </Text>
-          <Text style={styles.content}>
-            Faites votre trajet du quotidien ou baladez vous dans votre quartier
-            pour pouvoir marquer les points qui pourront aider vos concitoyens !
-            C'est tout simple : prenez une photo d'un problème, d'une point
-            d’intérêt ou encore d’un événement et postez la !{content}
-          </Text>
-          <Text style={styles.content}>
-            Faites votre trajet du quotidien ou baladez vous dans votre quartier
-            pour pouvoir marquer les points qui pourront aider vos concitoyens !
-            C'est tout simple : prenez une photo d'un problème, d'une point
-            d’intérêt ou encore d’un événement et postez la !{content}
-          </Text>
-          <Text style={styles.content}>
-            Faites votre trajet du quotidien ou baladez vous dans votre quartier
-            pour pouvoir marquer les points qui pourront aider vos concitoyens !
-            C'est tout simple : prenez une photo d'un problème, d'une point
-            d’intérêt ou encore d’un événement et postez la !{content}
-          </Text>
-          <Text style={styles.content}>
-            Faites votre trajet du quotidien ou baladez vous dans votre quartier
-            pour pouvoir marquer les points qui pourront aider vos concitoyens !
-            C'est tout simple : prenez une photo d'un problème, d'une point
-            d’intérêt ou encore d’un événement et postez la !{content}
-          </Text>
-          <Text style={styles.content}>
-            Faites votre trajet du quotidien ou baladez vous dans votre quartier
-            pour pouvoir marquer les points qui pourront aider vos concitoyens !
-            C'est tout simple : prenez une photo d'un problème, d'une point
-            d’intérêt ou encore d’un événement et postez la !{content}
-          </Text>
-          <Text style={styles.content}>
-            Faites votre trajet du quotidien ou baladez vous dans votre quartier
-            pour pouvoir marquer les points qui pourront aider vos concitoyens !
-            C'est tout simple : prenez une photo d'un problème, d'une point
-            d’intérêt ou encore d’un événement et postez la !{content}
-          </Text>
+
+          <Image source={require('../../assets/images/icons/like.png')}></Image>
+          </View>
+          <Text style={styles.subtitle}>Commentaires</Text>
+          <View style={{flexDirection: "row", alignItems:'center', justifyContent:"space-between"}}>
+            <Text style={styles.contentSmall}>5 commentaires</Text>
+            <View style={{flexDirection: "row", alignItems:'center'}}>
+              <Text style={styles.contentSmall}>Trier par</Text>
+              <Text style={styles.contentDrop}>Plus récents</Text>
+            </View>
+          </View>
+          <View style={{height:25}}></View>
+         
+          <View>
+          <Pressable
+
+              style={styles.usernameCont}
+              onPress={() => {
+  /* 1. Navigate to the Details route with params */
+  navigation.navigate("UserProfile", { uid: uid });
+              }}
+              >
+              <Image
+                resizeMode="contain"
+                style={{
+                  height: 20,
+                  width: 20,
+                }}
+                source={require("../../assets/images/userpic.png")}
+              ></Image>
+              <Text style={styles.username}>Jackie Chan</Text>
+              </Pressable>
+            <Text style={styles.content}>Sed commodo leo nulla tristique urna sed quam quis. Tempor, massa nam fames faucibus.</Text>
+            <View style={{alignItems: "flex-end", borderBottomWidth:1, borderBottomColor:"#DADADA", marginBottom:30,}}>
+              <Text style={{fontSize: 10, color: "#838383", }}>25/03/22 à 5h35</Text>
+            </View>
+          </View>
+          <View>
+          <Pressable
+
+              style={styles.usernameCont}
+              onPress={() => {
+  /* 1. Navigate to the Details route with params */
+  navigation.navigate("UserProfile", { uid: uid });
+              }}
+              >
+              <Image
+                resizeMode="contain"
+                style={{
+                  height: 20,
+                  width: 20,
+                }}
+                source={require("../../assets/images/userpic.png")}
+              ></Image>
+              <Text style={styles.username}>Jackie Chan</Text>
+              </Pressable>
+            <Text style={styles.content}>Sed commodo leo nulla tristique urna sed quam quis. Tempor, massa nam fames faucibus.</Text>
+            <View style={{alignItems: "flex-end", borderBottomWidth:1, borderBottomColor:"#DADADA", marginBottom:30,}}>
+              <Text style={{fontSize: 10, color: "#838383", }}>25/03/22 à 5h35</Text>
+            </View>
+          </View>
+          <View>
+          <Pressable
+
+              style={styles.usernameCont}
+              onPress={() => {
+  /* 1. Navigate to the Details route with params */
+  navigation.navigate("UserProfile", { uid: uid });
+              }}
+              >
+              <Image
+                resizeMode="contain"
+                style={{
+                  height: 20,
+                  width: 20,
+                }}
+                source={require("../../assets/images/userpic.png")}
+              ></Image>
+              <Text style={styles.username}>Jackie Chan</Text>
+              </Pressable>
+            <Text style={styles.content}>Sed commodo leo nulla tristique urna sed quam quis. Tempor, massa nam fames faucibus.</Text>
+            <View style={{alignItems: "flex-end", borderBottomWidth:1, borderBottomColor:"#DADADA", marginBottom:30,}}>
+              <Text style={{fontSize: 10, color: "#838383", }}>25/03/22 à 5h35</Text>
+            </View>
+          </View>
+          <View>
+          <Pressable
+
+              style={styles.usernameCont}
+              onPress={() => {
+  /* 1. Navigate to the Details route with params */
+  navigation.navigate("UserProfile", { uid: uid });
+              }}
+              >
+              <Image
+                resizeMode="contain"
+                style={{
+                  height: 20,
+                  width: 20,
+                }}
+                source={require("../../assets/images/userpic.png")}
+              ></Image>
+              <Text style={styles.username}>Jackie Chan</Text>
+              </Pressable>
+            <Text style={styles.content}>Sed commodo leo nulla tristique urna sed quam quis. Tempor, massa nam fames faucibus.</Text>
+            <View style={{alignItems: "flex-end", borderBottomWidth:1, borderBottomColor:"#DADADA", marginBottom:30,}}>
+              <Text style={{fontSize: 10, color: "#838383", }}>25/03/22 à 5h35</Text>
+            </View>
+          </View>
+          <View>
+          <Pressable
+
+              style={styles.usernameCont}
+              onPress={() => {
+  /* 1. Navigate to the Details route with params */
+  navigation.navigate("UserProfile", { uid: uid });
+              }}
+              >
+              <Image
+                resizeMode="contain"
+                style={{
+                  height: 20,
+                  width: 20,
+                }}
+                source={require("../../assets/images/userpic.png")}
+              ></Image>
+              <Text style={styles.username}>Jackie Chan</Text>
+              </Pressable>
+            <Text style={styles.content}>Sed commodo leo nulla tristique urna sed quam quis. Tempor, massa nam fames faucibus.</Text>
+            <View style={{alignItems: "flex-end", borderBottomWidth:1, borderBottomColor:"#DADADA", marginBottom:30,}}>
+              <Text style={{fontSize: 10, color: "#838383", }}>25/03/22 à 5h35</Text>
+            </View>
+          </View>
+
+          <TextInput
+              containerStyle={{ marginTop: 15 }}
+              placeholder="Votre commentaire"
+              // value={default}
+              autoCapitalize="none"
+              autoCompleteType="off"
+              autoCorrect={true}
+              // secureTextEntry={true}
+              // onChangeText={(text) => setPassword(text)}
+            />
+        
+            <Button
+              text="Commenter"
+              onPress={() => {
+                
+              }}
+              style={{
+                marginTop: 20,
+              }}
+              // disabled={loading}
+            />
+         
+
+
+        <View style={{height:500}}></View>
         </ScrollView>
       </View>
     </Layout>
@@ -200,65 +305,26 @@ export default function ({
 }
 
 const styles = StyleSheet.create({
-  // fullScreen: {
-  //   // flex: 1,
-  //   alignItems: "center",
-  //   // overflow:"scroll",
-  //   // justifyContent: "center",
-  //   // backgroundColor: "#F7F7F7",
-  // },
 
-  pageContainer: {
-    width: "100%",
-    // height:"100%",
-    // display:"flex",
-    // alignSelf:"center",
+  pageContainer : {
+    width : "100%",
     flex: 1,
-    // flexGrow:1,
     alignItems: "center",
-    // overflow:"scroll",
-    // backgroundColor : "#F7F7F7",
-
-    // padding :
+    // height:"200%"
   },
 
-  postContainer: {
-    width: "80%",
-    // display:"flex",
+  postContainer : {
+    width:"80%",
     flex: 1,
-    // justifyContent:'center',
-    // alignItems:'center',
-    // backgroundColor : "#F7F7F7",
-    // height:"100%"
-  },
-
-  header: {
-    width: "100%",
-    marginTop: "10%",
-    height: "10%",
-    // backgroundColor: '#FF9900',:
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  headerTitle: {
-    fontSize: 28,
-    color: "#B4B4B4",
   },
 
   title: {
-    // fontWeight: 600,
     fontSize: 24,
-    // flexShrink: 1 ,
-    // width: "60%",
     color: "#2C60C6",
     marginVertical: 10,
   },
   subtitle: {
-    // fontWeight: 600,
     fontSize: 18,
-    // flexShrink: 1 ,
-    // width: "60%",
     color: "#2C60C6",
     marginVertical: 10,
     borderBottomWidth: 1,
@@ -267,37 +333,53 @@ const styles = StyleSheet.create({
 
   content: {
     fontSize: 14,
-    // flex: 1,
-    // flexShrink:1,
     color: "#838383",
-    marginBottom: 25,
+    marginBottom: 20,
+  },
+  contentSmall: {
+    fontSize: 10,
+    color: "#838383",
+    marginRight: 5,
+  },
+  contentDrop: {
+    fontSize: 10,
+    // display: "flex",
+    // flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FCF4ED",
+    borderRadius: 20,
+    padding: 5,
+    borderWidth: 1,
+    borderColor: "#DADADA",
+    // alignSelf: "flex-start",
+    // marginVertical: 10,
   },
 
   username: {
     color: "#FF4070",
     fontSize: 16,
-    marginVertical: 10,
+    marginLeft: 10,
   },
 
   usernameCont: {
-    // width:30,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    // flex: 1,
+    marginBottom:"5%"
   },
 
-  image: {
-    marginVertical: 10,
-    height: "30%",
+  image :{
+    marginTop:10,
+    height: "20%",
     resizeMode: "cover",
-    // flex:1,
-    width: "100%",
+    width: '100%',
+    borderRadius:8,
+  
+
   },
 
   iconCat: {
     marginRight: "5%",
-    // margin: "2.5%"
   },
 
   categoryCont: {
@@ -311,23 +393,22 @@ const styles = StyleSheet.create({
     borderColor: "#DADADA",
     alignSelf: "flex-start",
     marginVertical: 10,
+    
   },
 
   xpHeader: {
-    // position: "absolute",
-    width: "100%",
-    // left: "7.5%",
-    height: "12%",
-    // top: "4.5%",
+    width: "80%",
+    height: 100,
     alignItems: "center",
     justifyContent: "center",
   },
 
   xpBar: {
     width: "80%",
-    height: "40%",
+    height: 35,
     alignItems: "flex-start",
     justifyContent: "center",
+    
   },
 
   xpBarBase: {
@@ -337,9 +418,9 @@ const styles = StyleSheet.create({
 
   xpBarOverlay: {
     width: "50%",
-    height: "80%",
-    left: "1.25%",
-    top: "5%",
+    height: "60%",
+    // left: "%",
+    top: "16%",
     position: "absolute",
     backgroundColor: "#FF0099",
     borderRadius: 7.5,

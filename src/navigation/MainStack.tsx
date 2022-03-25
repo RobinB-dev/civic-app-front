@@ -7,11 +7,8 @@ import NewPost from "../screens/NewPost";
 import NewPostComplete from "../screens/NewPostComplete";
 import NewPostPublished from "../screens/NewPostPublished";
 import SinglePost from "../screens/SinglePost";
-<<<<<<< Updated upstream
 import UserProfile from "../screens/UserProfile";
-=======
 import Onboarding from "../screens/Onboarding";
->>>>>>> Stashed changes
 
 const MainStack = createNativeStackNavigator();
 const Main = () => {
